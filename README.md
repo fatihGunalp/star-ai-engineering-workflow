@@ -35,6 +35,12 @@
   </p>
 
   <p>
+    <a href="https://softbreak.net"><strong>🌐 Web Sitesi</strong></a>
+    ·
+    <a href="https://www.youtube.com/@softbreak"><strong>▶ YouTube Kanalı</strong></a>
+  </p>
+
+  <p>
     <a href="#-hızlı-başlangıç">🚀 Hızlı Başlangıç</a>
     ·
     <a href="#-nasıl-çalışır">⚙️ Nasıl Çalışır?</a>

@@ -35,6 +35,12 @@
   </p>
 
   <p>
+    <a href="https://softbreak.net"><strong>🌐 Website</strong></a>
+    ·
+    <a href="https://www.youtube.com/@softbreak"><strong>▶ YouTube Channel</strong></a>
+  </p>
+
+  <p>
     <a href="#-quick-start">🚀 Quick Start</a>
     ·
     <a href="#️-how-it-works">⚙️ How It Works</a>
