@@ -1,0 +1,64 @@
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE and editor settings
+.vs/
+.idea/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# .NET build outputs
+**/bin/
+**/obj/
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+secrets.json
+appsettings.Local.json
+appsettings.*.Local.json
+
+# Local tool state
+.cursor/index/
+.claude/settings.local.json
+.codex/
+.history/
+
+# Package and cache directories
+.nuget/
+packages/
+.cache/
+coverage/
+
+# Archives
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
