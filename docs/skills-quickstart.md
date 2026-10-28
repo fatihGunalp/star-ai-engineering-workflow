@@ -1,86 +1,101 @@
-# STAR Agent Skill — kurulum ve kullanım
+# STAR Agent Skill — hızlı kurulum ve kullanım
 
-Bu repo iki kullanım biçimi sunar:
+**Bir kez kur, farklı projelerde gerektiğinde kullan.** Bu repo, STAR mühendislik karar akışını [Agent Skills](https://agentskills.io/specification) standardında, taşınabilir bir paket olarak dağıtır.
 
-- **Kalıcı proje talimatları**: `rules/` altındaki `CLAUDE.md`, `AGENTS.md`, Cursor/Copilot kuralları; proje boyunca geçerli davranışlar.
-- **İsteğe göre yüklenen Agent Skill**: `skills/star-engineering/SKILL.md`; görevle eşleştiğinde devreye girer. Aynı kuralları her sohbete uzun uzun yapıştırmak gerekmez.
+## 1. Tek komutla kurulum (önerilen)
 
-Bu paket, [Agent Skills](https://agentskills.io/) biçimini izler; modellerin kendilerinden ziyade **kullandıkları uygulamanın/agent'ın** skill keşif desteğine dayanır.
-
-## Hızlı kurulum (Python 3.9+, ek paket yok)
-
-Repo'yu klonladıktan sonra aşağıdaki komutu çalıştırın. Proje yolunu **skill'in kullanılacağı projenin** yolu olarak verin; STAR reposunun yolu olarak değil.
+**Gereksinim:** Node.js 22.20+ ve desteklenen bir coding agent. Komutu STAR reposunda değil, **kendi uygulama projenizin kök dizininde** çalıştırın.
 
 ```bash
-git clone https://github.com/fatihGunalp/star-ai-engineering-workflow.git
+npx skills add fatihGunalp/star-ai-engineering-workflow --skill star-engineering
+```
+
+Kurucu agent seçimi sorar ve Skill'i hedef projeye yerleştirir. Yalnızca Claude Code'a kurmak için:
+
+```bash
+npx skills add fatihGunalp/star-ai-engineering-workflow --skill star-engineering -a claude-code -y
+```
+
+Codex için:
+
+```bash
+npx skills add fatihGunalp/star-ai-engineering-workflow --skill star-engineering -a codex -y
+```
+
+**Her proje yerine kullanıcı genelinde kullanmak için** `-g` ekleyin:
+
+```bash
+npx skills add fatihGunalp/star-ai-engineering-workflow --skill star-engineering -g -a claude-code -y
+```
+
+Kullanıcı geneli kurulum, her projeye ayrı dosya eklemenizi gerektirmez. Hangi modelin/uygulamanın Skill'i keşfettiği o uygulamanın desteğine bağlıdır. Claude, Codex, Cursor, Gemini CLI ve Copilot desteği için araç seçimini standart CLI'ya bırakmak, klasörleri elle yönetmekten daha güvenilirdir.
+
+**Durum notu:** Bu sürüm `feat/portable-star-agent-skill` dalında PR olarak hazırlanmıştır. Yukarıdaki `owner/repo` komutları `main` dalındaki içeriği kurar; Skill ancak PR merge edildiğinde bu yolla erişilebilir. Merge öncesi yerel test için:
+
+```bash
+git clone --branch feat/portable-star-agent-skill https://github.com/fatihGunalp/star-ai-engineering-workflow.git
 cd star-ai-engineering-workflow
-
-# Claude Code (macOS / Linux / Windows; Python kuruluysa)
-python3 scripts/install_skill.py --tool claude --project /path/to/my-app
-
-# Codex
-python3 scripts/install_skill.py --tool codex --project /path/to/my-app
-
-# Gemini CLI, GitHub Copilot agent veya Cursor
-python3 scripts/install_skill.py --tool gemini --project /path/to/my-app
-python3 scripts/install_skill.py --tool copilot --project /path/to/my-app
-python3 scripts/install_skill.py --tool cursor --project /path/to/my-app
+npx skills add ./skills/star-engineering --skill star-engineering -a claude-code -y
 ```
 
-Windows'ta `python3` yerine `py -3` veya `python` komutunu kullanın. `/path/to/my-app` yerine gerçek proje yolunu yazın. Kullanıcı düzeyinde tüm projeler için `--scope user` verin; `--project` gerekmez.
+## 2. Nasıl devreye girer?
 
-**Mevcut skill dosyaları üzerine yazılmaz.** Aynı içerik zaten yüklüyse değişiklik yapılmaz; farklı dosya varsa kurulum hata verir ve mevcut içerik korunur. Yeni sürüm için önce kendi değişikliklerinizi yedekleyin.
+Agent, her görevde bütün STAR talimatlarını okumak yerine önce `SKILL.md` dosyasının `name` ve `description` bilgisini görür. Yeni özellik, anlamlı hata düzeltmesi, API/veri modeli değişikliği veya riskli mühendislik kararları gibi uygun işlerde Skill'i yükleyebilir. **Otomatik seçimi model/agent belirler; garanti değildir.** Gerekirse isteğinizde açıkça `star-engineering skill'ini kullan` yazın.
 
-## Hangi araç hangi klasörü kullanır?
-
-| Araç | Proje içi hedef | Kullanıcı düzeyi |
-|---|---|---|
-| Claude Code | `.claude/skills/star-engineering/SKILL.md` | `~/.claude/skills/star-engineering/SKILL.md` |
-| Codex | `.agents/skills/star-engineering/SKILL.md` | `~/.agents/skills/star-engineering/SKILL.md` |
-| Gemini CLI | `.agents/skills/star-engineering/SKILL.md` | `~/.agents/skills/star-engineering/SKILL.md` |
-| GitHub Copilot agent | `.agents/skills/star-engineering/SKILL.md` | `~/.agents/skills/star-engineering/SKILL.md` (desteklenen istemcilerde) |
-| Cursor | `.agents/skills/star-engineering/SKILL.md` | `~/.agents/skills/star-engineering/SKILL.md` |
-
-Bu dört agent ortak `.agents/skills` konumunu kullanabildiği için tek kurulumdan yararlanabilir. Claude Code için ayrıca `.claude/skills` konumuna kopyalayın. `--tool all` her iki konuma kopyalar; iki konumu birden tarayan istemciler aynı isimli skill'i iki kez gösterebilir. Kurulumdan sonra agent'ı yenileyin/yeniden başlatın.
-
-**Kaynaklar (resmî):** [Claude Skills](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview), [Codex Skills](https://learn.chatgpt.com/docs/build-skills), [Gemini CLI Skills](https://geminicli.com/docs/cli/skills/), [Copilot Skills](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills), [Cursor Skills](https://cursor.com/docs/skills).
-
-## Claude.ai (web) için
-
-Claude.ai'deki özel skill yükleme işlevi ile bir ZIP paketini içeri alabilirsiniz. Klasörü `SKILL.md` ile birlikte paketleyin:
-
-```bash
-cd skills
-zip -r star-engineering.zip star-engineering
-```
-
-Claude.ai tarafındaki güncel Skills ekranından yükleyin. Bu işlem Claude Code'un proje klasörü kurulumundan ayrıdır; hesap özelliklerine ve kod çalıştırma desteğine bağlıdır.
-
-## Skill desteklemeyen sohbet araçları
-
-Bir web sohbeti ya da uygulama Agent Skills keşfini desteklemiyorsa, aynı `SKILL.md` talimatlarını proje talimatlarına veya sohbete verin. Bu, **otomatik skill etkinleşmesiyle aynı şey değildir**. Orijinal `rules/universal/STAR-WORKFLOW.md` de evrensel alternatif olarak kullanılabilir.
-
-## Kullanım
-
-Kod projenizde şu tür gerçek bir görev isteyin:
+**Tam STAR modu:** İşin problemini, kritik kararları, seçenekleri, kırılma noktalarını, testleri ve doğrulamayı görünür kılar. **Direct modu:** Yazım hatası, biçimlendirme gibi küçük ve düşük riskli işlerde uzun rapor üretmez.
 
 ```text
-Ödeme butonuna iki kez basılınca aynı sipariş için ikinci tahsilat oluşmasın.
-STAR ile problemi ve testleri önce ortaya çıkar.
+Ödeme butonuna iki kez basılırsa aynı sipariş için iki kez tahsilat yapılmasın.
+star-engineering skill'ini kullan. Koddan önce iş kuralını ve hata senaryolarını çıkar.
 ```
 
-İyi bir sonuç hemen kod üretmek yerine *hangi isteğin aynı ödeme sayılacağı*, *sunucu idempotency koruması*, *eş zamanlı çağrılar*, *timeout sonrası durum* ve *test kanıtlarını* görünür kılmalıdır. Açıklamalı örnek: [çift ödeme senaryosu](../skills/star-engineering/references/double-payment.md).
+[Somut örnek: bir siparişin iki kez tahsil edilmesi](../skills/star-engineering/references/double-payment.md). Skill, kodu otomatik olarak doğru, güvenli veya production-ready yapmaz. Test ve insan denetimi gerekir.
 
-## Doğrulama
+## 3. Kurulumu doğrulama, güncelleme, kaldırma
+
+Hedef projenizde:
+
+```bash
+npx skills list
+npx skills check
+npx skills update star-engineering
+npx skills remove star-engineering
+```
+
+Listeleme, paket kurulumunu gösterir; agent'ın gerçekten Skill'i devreye soktuğunu **kanıtlamaz**. Gerçek agent üzerinde örnek görevi çalıştırıp STAR çıktısının somut kararları, riskleri ve testleri içerip içermediğini kontrol edin.
+
+`npx skills` CLI isteğe bağlı anonim kurulum telemetrisi toplar; CLI belgesine göre `DISABLE_TELEMETRY=1` ile kapatılabilir. Kodu ve dağıtım kaynağını incelemeden üçüncü taraf skill yüklemeyin.
+
+CLI belgesi: [Skills CLI](https://www.skills.sh/docs/cli), [komut referansı](https://github.com/vercel-labs/skills/blob/main/docs/commands.md).
+
+## 4. Python ile manuel / bağımlılıksız alternatif
+
+Node.js kurulu değilse, repo klonlandıktan sonra Python 3.9+ ile:
+
+```bash
+# Repo kök dizinindeyken, --project hedef projedir
+python3 scripts/install_skill.py --tool claude --project /path/to/my-app
+python3 scripts/install_skill.py --tool codex --project /path/to/my-app
+python3 scripts/install_skill.py --tool all --project /path/to/my-app
+```
+
+Windows'ta `python3` yerine `py -3` kullanabilirsiniz. `--scope user` kullanıcı geneline kurar. Var olan farklı içeriklerin üzerine yazılmaz; CLI kadar kapsamlı bir güncelleme yönetimi sağlamaz. Bu manuel alternatifin kullandığı hedefler: Claude için `.claude/skills/star-engineering`, diğer desteklenen agent'lar için ortak `.agents/skills/star-engineering`.
+
+## 5. Claude.ai web ve başka sohbet modelleri
+
+Claude.ai'nin özel Skill ZIP yükleme yeteneği erişiminizdeyse `skills/star-engineering/` klasörünü `SKILL.md` dosyasıyla birlikte ZIP'leyip yükleyin. Bu yol, Claude Code kurulumu değildir. ChatGPT gibi bir sohbet uygulaması bu agent keşfini desteklemiyorsa `rules/universal/STAR-WORKFLOW.md` dosyasını proje talimatı olarak kullanabilirsiniz; bunu otomatik Skill etkinleşmesiyle karıştırmayın.
+
+## 6. Paket testleri
 
 ```bash
 python3 -m unittest discover -s tests -v
 ```
 
-Bu testler **kurulum betiğinin dosya yerleşimini ve üzerine yazmama davranışını** kontrol eder. Claude/Codex/Gemini/Copilot/Cursor üzerinde gerçek bir çalıştırma yapıldığını **kanıtlamaz**. Her agent'ta skill keşfi ve verilen göreve uygun çıktı ayrıca kontrol edilmelidir.
+Testler paket sözleşmesini ve Python kurulum davranışını kontrol eder. Gerçek Claude/Codex/Cursor/Gemini/Copilot çıktılarının davranış değerlendirmesi ayrıca yapılmalıdır.
 
-## Sınırlar
+## 7. Dağıtım ve sorumluluk sınırları
 
-- Skill kodu otomatik olarak güvenli veya hatasız kılmaz; gerçek test, inceleme ve karar sahipliği gerekir.
-- Bir `SKILL.md` dosyası Instagram yorumlarına otomatik DM göndermez. Yorum tetikleyicisi, hesap izinleri ve mesaj teslimi ayrı bir Meta uyumlu entegrasyon gerektirir.
-- Skill'i dağıtmadan önce proje lisansı ve üçüncü taraf katkı politikası ayrıca netleştirilmelidir.
+- Kullanıcının ürün ve yüksek etkili mühendislik kararlarını agent sessizce vermemelidir.
+- Skill bir güvenlik tarayıcısı veya kod doğruluk garantisi değildir.
+- Instagram yorumlarına otomatik DM göndermeyi sağlamaz; bunun ayrı bir Meta uyumlu otomasyona ihtiyacı vardır.
+- Kamusal yeniden kullanım ve çatallama hakları için repository'nin lisansı ayrıca netleştirilmelidir.
