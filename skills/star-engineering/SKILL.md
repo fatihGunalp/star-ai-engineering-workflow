@@ -1,6 +1,6 @@
 ---
 name: star-engineering
-description: Use for nontrivial AI-assisted software engineering work: building or changing features, debugging behavior, designing APIs, changing data models, integrating services, refactoring, reviewing risky code, and preparing an engineering handoff. Makes the real problem, hidden product decisions, viable alternatives, failure modes, tests, and verification visible before claiming success. Skip full ceremony for typos, formatting, and clearly mechanical changes.
+description: "Use for nontrivial AI-assisted software engineering work: building or changing features, debugging behavior, designing APIs, changing data models, integrating services, refactoring, reviewing risky code, and preparing an engineering handoff. Makes the real problem, hidden product decisions, viable alternatives, failure modes, tests, and verification visible before claiming success. Skip full ceremony for typos, formatting, and clearly mechanical changes."
 ---
 
 # STAR Engineering — portable agent skill
