@@ -107,6 +107,23 @@ Bu repo, AI’ın senin yerine görünmez mühendislik kararları vermesini azal
 | Kararlar sohbet geçmişinde kaybolur. | Kararlar kalıcı bir mühendislik teslim kaydına yazılır. |
 | Kullanıcı kodu açıklamakta zorlanır. | Kullanıcıya kodu savunması gereken sorular bırakılır. |
 
+## 🧩 Yeni: Claude Skill ve çoklu Agent desteği
+
+STAR artık yalnızca sürekli yüklü proje kuralları değil, görev gerektiğinde etkinleşebilen **taşınabilir bir Agent Skill** olarak da paketlendi.
+
+- **Tek kaynak:** [`skills/star-engineering/SKILL.md`](skills/star-engineering/SKILL.md)
+- **Kurulum:** Claude Code, Codex, Gemini CLI, GitHub Copilot agent ve Cursor için bağımlılıksız `scripts/install_skill.py`
+- **Gerçek hayattan örnek:** [Bir yemek siparişinin iki kez tahsil edilmesi](skills/star-engineering/references/double-payment.md) — arayüz kilidinin neden tek başına yeterli olmadığını gösterir.
+- **Tam rehber:** [Skill kurulumu ve doğrulama](docs/skills-quickstart.md)
+
+```bash
+# Bu repo klonlandıktan sonra, kendi uygulamanız için:
+python3 scripts/install_skill.py --tool claude --project /path/to/my-app
+python3 scripts/install_skill.py --tool codex --project /path/to/my-app
+```
+
+Skill, mevcut `CLAUDE.md` / `AGENTS.md` dosyalarının yerini almak zorunda değildir; farklı bir kullanım katmanıdır. **Otomatik hata yakalama veya güvenlik garantisi sağlamaz.**
+
 ## 🚀 Hızlı Başlangıç
 
 ### 1. Kullandığın Aracı Seç
