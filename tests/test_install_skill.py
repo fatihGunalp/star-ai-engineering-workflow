@@ -34,6 +34,9 @@ class SkillInstallTests(unittest.TestCase):
         self.assertTrue(
             (self.project / ".claude/skills/star-engineering/references/double-payment.md").is_file()
         )
+        self.assertTrue(
+            (self.project / ".claude/skills/star-engineering/agents/openai.yaml").is_file()
+        )
         second = self.run_install("--tool", "claude")
         self.assertEqual(second.returncode, 0, second.stderr)
         self.assertIn("UNCHANGED:", second.stdout)
@@ -45,6 +48,9 @@ class SkillInstallTests(unittest.TestCase):
                 self.assertEqual(result.returncode, 0, result.stderr)
         self.assertTrue(
             (self.project / ".agents/skills/star-engineering/SKILL.md").is_file()
+        )
+        self.assertTrue(
+            (self.project / ".agents/skills/star-engineering/agents/openai.yaml").is_file()
         )
 
     def test_conflicting_install_is_not_overwritten(self):
