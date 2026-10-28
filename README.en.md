@@ -125,6 +125,8 @@ npx skills add fatihGunalp/star-ai-engineering-workflow --skill star-engineering
 npx skills add fatihGunalp/star-ai-engineering-workflow --skill star-engineering -a claude-code -g -y
 ```
 
+**Official Claude/Codex alignment:** Explicit invocation is `/star-engineering` in Claude Code and `$star-engineering` in Codex CLI/IDE. Both can select the skill implicitly; automatic selection is not guaranteed. [Platform alignment notes](docs/claude-codex-alignment.md). The `npx skills` installer is third-party, not an official Anthropic/OpenAI installer.
+
 The skill activates on relevant tasks and complements existing `CLAUDE.md` and `AGENTS.md` project rules. Node.js 22.20+ is required for the npx path. See the installation guide. It **cannot guarantee correctness or security**.
 
 ## 🚀 Quick Start
