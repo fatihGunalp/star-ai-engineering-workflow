@@ -125,6 +125,8 @@ npx skills add fatihGunalp/star-ai-engineering-workflow --skill star-engineering
 npx skills add fatihGunalp/star-ai-engineering-workflow --skill star-engineering -a claude-code -g -y
 ```
 
+**Resmî Claude/Codex hizalaması:** Claude Code'da `/star-engineering`, Codex CLI/IDE'de `$star-engineering` ile açıkça çağırabilirsin. İkisi de uygun görevlerde otomatik seçim yapabilir; bu garanti değildir. [Platform uyumluluk notları](docs/claude-codex-alignment.md). `npx skills` üçüncü taraf kurucudur, resmî Anthropic/OpenAI komutu değildir.
+
 Skill, mevcut `CLAUDE.md` / `AGENTS.md` dosyalarının yerini almak zorunda değildir; uygun görevlerde ihtiyaç üzerine yüklenir. `npx` için Node.js 22.20+ gerekir. Ayrıntılar kurulum rehberinde. **Otomatik hata yakalama veya güvenlik garantisi sağlamaz.**
 
 ## 🚀 Hızlı Başlangıç
