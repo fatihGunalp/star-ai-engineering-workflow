@@ -46,6 +46,7 @@ jobs:
           npx --yes skills@1.7.4 add "$GITHUB_WORKSPACE" --skill star-engineering -a claude-code --copy -y
           test -f .agents/skills/star-engineering/SKILL.md || test -f .claude/skills/star-engineering/SKILL.md
           test -f .agents/skills/star-engineering/assets/handoff-template.md || test -f .claude/skills/star-engineering/assets/handoff-template.md
+          test -f .claude/skills/star-engineering/agents/openai.yaml || test -f .agents/skills/star-engineering/agents/openai.yaml
           npx --yes skills@1.7.4 list
 
           # A second consumer project verifies Codex installation independently.
@@ -54,4 +55,5 @@ jobs:
           npx --yes skills@1.7.4 add "$GITHUB_WORKSPACE" --skill star-engineering -a codex --copy -y
           test -f .agents/skills/star-engineering/SKILL.md || test -f .codex/skills/star-engineering/SKILL.md
           test -f .agents/skills/star-engineering/assets/handoff-template.md || test -f .codex/skills/star-engineering/assets/handoff-template.md
+          test -f .agents/skills/star-engineering/agents/openai.yaml || test -f .codex/skills/star-engineering/agents/openai.yaml
           npx --yes skills@1.7.4 list
