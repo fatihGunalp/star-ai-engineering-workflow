@@ -13,19 +13,18 @@
   </p>
 
   <p>
-    Ready-to-use project instructions that guide Cursor, Claude Code, GitHub Copilot,
-    Codex, and similar AI tools to explain the problem, expose critical decisions,
-    compare alternatives, identify failure modes, and record engineering decisions
-    before directly generating code.
+    An Agent Skill for Claude Code, Codex, Cursor, GitHub Copilot, and Gemini CLI.
+    It makes the AI ask you about critical decisions before writing code, show where
+    the solution can break, and report honestly what was actually verified.
   </p>
 
   <p>
-    <img src="https://img.shields.io/badge/Workflow-STAR-F97316" alt="STAR Workflow" />
-    <img src="https://img.shields.io/badge/Cursor-Supported-111827" alt="Cursor Supported" />
+    <img src="https://img.shields.io/badge/Agent_Skill-star--engineering-F97316" alt="Agent Skill: star-engineering" />
     <img src="https://img.shields.io/badge/Claude_Code-Supported-D97757" alt="Claude Code Supported" />
-    <img src="https://img.shields.io/badge/GitHub_Copilot-Supported-24292F" alt="GitHub Copilot Supported" />
     <img src="https://img.shields.io/badge/Codex-Supported-10A37F" alt="Codex Supported" />
-    <img src="https://img.shields.io/badge/Language-TR%20%7C%20EN-2563EB" alt="Turkish and English" />
+    <img src="https://img.shields.io/badge/Cursor-Supported-111827" alt="Cursor Supported" />
+    <img src="https://img.shields.io/badge/GitHub_Copilot-Supported-24292F" alt="GitHub Copilot Supported" />
+    <img src="https://img.shields.io/badge/License-MIT-16A34A" alt="MIT License" />
   </p>
 
   <p>
@@ -40,472 +39,218 @@
     <a href="https://www.youtube.com/@softbreak"><strong>▶ YouTube Channel</strong></a>
   </p>
 
-  <p>
-    <a href="#-quick-start">🚀 Quick Start</a>
-    ·
-    <a href="#️-how-it-works">⚙️ How It Works</a>
-    ·
-    <a href="#-example-engineering-handoff">📄 Example Output</a>
-    ·
-    <a href="#-the-four-engineering-questions">🧭 Four Questions</a>
-  </p>
-
 </div>
 
 ---
 
-<details>
-<summary><strong>What does STAR AI Engineering Workflow do?</strong></summary>
+## Contents
 
-<br />
+- [What is this?](#what-is-this)
+- [Quick start](#-quick-start)
+- [Usage](#-usage)
+- [Which installation should I choose?](#-which-installation-should-i-choose)
+- [How it works](#️-how-it-works)
+- [Examples](#-examples)
+- [When to use it](#when-to-use-it)
+- [What this repository is not](#what-this-repository-is-not)
+- [Repository structure](#repository-structure)
+- [Contributing](#contributing)
+- [License](#license)
 
-This workflow encourages the following behavior during AI-assisted development:
+## What is this?
 
-- Reframes the request as a problem before turning it into a coding task.
-- Exposes missing acceptance criteria and hidden assumptions.
-- Does not silently invent product or architectural decisions that belong to the user.
-- Compares viable alternatives and their costs.
-- Makes failure modes and the test plan visible before coding.
-- Produces changes in small, explainable steps.
-- Records decisions in a `STAR-HANDOFF.md` file after implementation.
+Ask an AI to "add a password reset feature" and you get working code in seconds. But along the way, the AI made many decisions for you: How long is the token valid? Can it be reused? What is returned when the user does not exist? What happens when two requests arrive at once?
 
-</details>
+**Working code does not mean you own these decisions.**
 
-## Why Does This Repository Exist?
-
-We often give AI tools a request like this:
-
-```text
-Add a password reset feature to this project.
-```
-
-AI can produce a working solution in seconds. But while doing so, it may silently make many decisions:
-
-- How will the token be generated?
-- Where and in what form will it be stored?
-- How long will it remain valid?
-- Can it be reused?
-- What happens when the user does not exist?
-- What happens when multiple requests arrive at the same time?
-- Which tests will be written?
-- Which security and operational costs will be accepted?
-
-Working code does not mean you own these decisions.
-
-This repository exists to reduce invisible engineering decisions made on your behalf and keep you inside the decision-making process.
-
-> **The goal is not to slow AI down. The goal is to preserve engineering responsibility while moving fast.**
-
-## Before and After
+STAR is a workflow that makes the AI put these invisible decisions on the table before it writes code:
 
 | Without STAR | With STAR |
 |---|---|
-| The request is translated directly into code. | The request is first reframed as a problem. |
-| Missing requirements are silently completed by AI. | Missing decisions are made visible to the user. |
-| The first working solution is accepted. | Alternatives and trade-offs are compared. |
-| Failure modes are discovered after implementation. | Failure modes and tests are planned before coding. |
-| Decisions disappear inside chat history. | Decisions are recorded in a persistent engineering handoff. |
-| The developer struggles to explain the code. | The developer receives implementation-specific questions they must be able to defend. |
+| The request is turned directly into code. | The request is first defined as a problem with acceptance criteria. |
+| The AI silently fills in missing requirements. | Decisions that belong to you are asked explicitly. |
+| The first working solution is accepted. | Real alternatives and their costs are compared. |
+| Failure points are discovered in production. | Failure scenarios and tests are defined before coding. |
+| "Tests pass" is claimed, whether or not they ran. | Checks actually run are reported separately from planned ones. |
+| Decisions get lost in chat history. | Decisions are written to a durable handoff (`STAR-HANDOFF.md`). |
 
-## 🧩 New: Portable Agent Skill
+> **The goal is not to slow AI down. The goal is to keep engineering responsibility while moving fast.**
 
-STAR is now available as an **on-demand Agent Skill**, in addition to always-on project instruction files.
+## 🚀 Quick start
 
-- **Canonical skill:** [`skills/star-engineering/SKILL.md`](skills/star-engineering/SKILL.md)
-- **One-command install:** `npx skills add` for supported agents including Claude Code, Codex, Cursor, Gemini CLI and GitHub Copilot
-- **Fallback:** `scripts/install_skill.py` for Python-based installation without Node.js
-- **Everyday scenario:** [One dinner order accidentally charged twice](skills/star-engineering/references/double-payment.md)
-- **Installation guide:** [Setup and limitations](docs/skills-quickstart.md)
+**Requirements:** [Node.js](https://nodejs.org/) 22.20+ and a supported coding agent.
+
+Run this in the root of your own project:
 
 ```bash
-# Run inside your application project (after the PR merges to main):
 npx skills add fatihGunalp/star-ai-engineering-workflow --skill star-engineering
-
-# Claude Code, global install:
-npx skills add fatihGunalp/star-ai-engineering-workflow --skill star-engineering -a claude-code -g -y
 ```
 
-**Official Claude/Codex alignment:** Explicit invocation is `/star-engineering` in Claude Code and `$star-engineering` in Codex CLI/IDE. Both can select the skill implicitly; automatic selection is not guaranteed. [Platform alignment notes](docs/claude-codex-alignment.md). The `npx skills` installer is third-party, not an official Anthropic/OpenAI installer.
+The installer asks which agents to install it for. That is it.
 
-The skill activates on relevant tasks and complements existing `CLAUDE.md` and `AGENTS.md` project rules. Node.js 22.20+ is required for the npx path. See the installation guide. It **cannot guarantee correctness or security**.
+To install it for a single agent, for all of your projects:
 
-## 🚀 Quick Start
+```bash
+npx skills add fatihGunalp/star-ai-engineering-workflow --skill star-engineering -g -a claude-code -y
+```
 
-### 1. Choose Your Tool
+> `npx skills` is a third-party, open-source installer ([Skills CLI](https://github.com/vercel-labs/skills)), not an official Anthropic or OpenAI command. Without Node.js, use the [Python installer](docs/skills-quickstart.md#5-python-ile-manuel--bağımlılıksız-alternatif).
+
+## 💬 Usage
+
+Restart your agent after installation and describe the task as usual. For a meaningful change (new feature, API, data model, payments, authentication...), the agent may select the Skill on its own. To invoke it explicitly:
+
+| Agent | Command |
+|---|---|
+| Claude Code | `/star-engineering Add a password reset feature.` |
+| Codex | `$star-engineering Add a password reset feature.` |
+
+Instead of writing code right away, the agent first responds with something like:
+
+```text
+Problem: Users who forget their password cannot get back in without contacting support.
+
+Decisions you need to make:
+1. How long should the token stay valid?
+2. Should a new request invalidate older active tokens?
+3. Should all sessions be signed out after a reset?
+
+Recommendation: A single-use token stored as a hash in the database.
+Alternative: A signed stateless token — no storage, but it cannot be revoked.
+
+Failure tests: parallel use of the same token, email service failure, expiry.
+```
+
+You make the decisions; the code is then written in small steps. When the work is done, the agent reports what was **actually** verified and writes a handoff to `docs/features/<feature>/STAR-HANDOFF.md`.
+
+For small tasks such as fixing a typo, STAR stays out of the way and the agent simply makes the change.
+
+> Automatic selection is the agent's choice and is not guaranteed. Invoke the Skill explicitly when you want to be sure.
+
+## 🧭 Which installation should I choose?
+
+STAR has **a single source**: [`skills/star-engineering/SKILL.md`](skills/star-engineering/SKILL.md). Every other file is generated from it, so the content is the same on every path. The only difference is **when it is loaded**.
+
+| Path | When is it loaded? | For whom? |
+|---|---|---|
+| **Agent Skill** (recommended) | Only when the task needs it | Claude Code, Codex, Cursor, Copilot, Gemini CLI |
+| **Always-on rule file** | On every message, all the time | Tools without Skill support, or teams that want STAR enforced on all work |
+| **Universal text** | When you paste it in | Chat apps such as ChatGPT, project instruction fields |
+
+<details>
+<summary><strong>Installing an always-on rule file</strong></summary>
+
+<br />
+
+Copy the file for your tool into your project:
 
 | Tool | Source file | Target location in your project |
 |---|---|---|
-| Cursor | `rules/cursor/star-engineering.mdc` | `.cursor/rules/star-engineering.mdc` |
 | Claude Code | `rules/claude-code/CLAUDE.md` | `CLAUDE.md` |
-| GitHub Copilot | `rules/github-copilot/copilot-instructions.md` | `.github/copilot-instructions.md` |
 | Codex | `rules/codex/AGENTS.md` | `AGENTS.md` |
+| Cursor | `rules/cursor/star-engineering.mdc` | `.cursor/rules/star-engineering.mdc` |
+| GitHub Copilot | `rules/github-copilot/copilot-instructions.md` | `.github/copilot-instructions.md` |
 | Other tools | `rules/universal/STAR-WORKFLOW.md` | Project instructions or persistent context |
 
-### 2. Add the Rule File to Your Project
+Also add the handoff template; the rules look for it at this location:
 
-Example: if you use Cursor, copy
-
-```text
-star-ai-engineering-workflow/
-└── rules/
-    └── cursor/
-        └── star-engineering.mdc
+```bash
+mkdir -p docs/star/templates
+cp templates/STAR-HANDOFF.md docs/star/templates/
 ```
 
-into your own project:
+> If your project already has a `CLAUDE.md`, `AGENTS.md`, or similar file, do not overwrite it. Append the STAR content to the existing file.
 
-```text
-my-project/
-└── .cursor/
-    └── rules/
-        └── star-engineering.mdc
-```
+</details>
 
-> If your project already contains `CLAUDE.md`, `AGENTS.md`, `.github/copilot-instructions.md`, or a similar instruction file, do not delete the existing content. Merge the STAR rules carefully with project-specific instructions.
+For installation, updates, removal, and verification details, see the **[Skill installation guide](docs/skills-quickstart.md)** (Turkish).
 
-### 3. Write Your Normal Request
+## ⚙️ How it works
 
-```text
-Add a password reset feature to this project.
-```
+STAR has two modes:
 
-Instead of immediately generating code, the AI should respond with something similar to:
+- **Direct mode** — typos, formatting, small and clearly specified fixes. The agent makes the change and says what it checked. No report, table, or handoff.
+- **STAR mode** — changes that affect behavior, contracts, data, security, concurrency, or operations. A change that looks small can still belong here.
 
-```text
-Problem we are trying to solve:
+In STAR mode, the agent:
 
-Allow users to securely set a new password through email without
-knowing their current password.
+1. **Inspects** — reads the relevant code, tests, and conventions; separates observations from assumptions.
+2. **Defines** — writes down the problem, current and desired behavior, scope, and acceptance criteria.
+3. **Exposes decisions** — asks for the decisions that belong to you and compares real alternatives.
+4. **Anticipates failure** — ties retries, concurrency, partial failures, permissions, and timeouts to tests.
+5. **Acts when safe** — stops only for blocking decisions and makes the smallest coherent change.
+6. **Verifies honestly** — reports executed, passed, failed, and not-run checks separately.
+7. **Leaves a handoff** — records decisions, alternatives, costs, tests, and open risks.
 
-Decisions that need clarification:
+At the end, you should be able to answer four questions:
 
-- How long should the reset token remain valid?
-- Should the token be single-use?
-- What response should be returned when the user does not exist?
-- Can a new request be created while an active token already exists?
+1. **Why this way?**
+2. **What other solution existed?**
+3. **Where can it break?**
+4. **What was actually verified?**
 
-Viable approaches:
+## 📚 Examples
 
-1. Store a hashed token in the database
-2. Use a signed stateless token
-
-I will not start implementation until these decisions are clarified.
-```
-
-### 4. Make the Decisions and Continue
-
-You clarify the decisions that AI cannot safely make without knowing the product requirements.
-
-The code is then produced through:
-
-- small steps,
-- explainable changes,
-- visible assumptions,
-- and predefined test scenarios.
-
-### 5. Receive the Engineering Handoff
-
-At the end of the work, a file such as this is created:
-
-```text
-docs/features/password-reset/STAR-HANDOFF.md
-```
-
-The file records not only **what** changed, but **why**.
-
-## ⚙️ How It Works
-
-The STAR engineering workflow has three phases.
-
-### 1. Before Coding
-
-The AI:
-
-1. Reframes the request as a problem.
-2. Identifies missing acceptance criteria.
-3. Exposes decisions that should not be made without the user.
-4. Compares viable alternatives.
-5. Explains the benefits and costs of its recommendation.
-6. Identifies likely failure modes.
-7. Lists the required tests before implementation.
-
-### 2. During Coding
-
-The AI:
-
-- makes small and explainable changes,
-- does not hide assumptions,
-- does not silently expand the scope,
-- does not invent product decisions that belong to the user,
-- explains not only what changed, but why.
-
-### 3. After Coding
-
-The AI:
-
-1. Summarizes the changes.
-2. Records the selected approach and its rationale.
-3. Lists alternatives considered.
-4. Records failure modes and known limitations.
-5. Lists tests added and tests still missing.
-6. Keeps open decisions visible.
-7. Generates questions the developer must be able to defend.
-8. Creates `STAR-HANDOFF.md`.
-
-## 📄 Example Engineering Handoff
-
-```markdown
-# Password Reset — Engineering Handoff
-
-## Problem Solved
-
-Allow users to securely set a new password through email without
-knowing their current password.
-
-## Acceptance Criteria
-
-- A valid user can request a reset link.
-- The same generic response is returned even when the user does not exist.
-- The token can be used only once.
-- Expired tokens are rejected.
-- The previous password becomes invalid after a successful reset.
-
-## Selected Approach
-
-A single-use reset token stored as a hash in the database.
-
-## Why This Approach Was Selected
-
-It allows individual token revocation, usage tracking, and prevention
-of token reuse.
-
-## Alternative Considered
-
-A signed stateless token.
-
-### Benefit
-
-Token verification does not require a database query.
-
-### Why It Was Not Selected
-
-Individual revocation, reuse prevention, and usage tracking are harder.
-
-## Decision Cost
-
-- Token generation and verification require database access.
-- Expired token records require a cleanup strategy.
-- Consistency rules for parallel requests must be defined explicitly.
-
-## Where Can It Break?
-
-- The same token is used twice.
-- The same user sends parallel reset requests.
-- The email service fails.
-- The token expires during the operation.
-- The database transaction is interrupted.
-
-## Tests Added
-
-- A valid token changes the password.
-- An expired token is rejected.
-- A used token cannot be reused.
-- A missing user is not disclosed.
-
-## Tests Still Missing
-
-- Parallel token usage
-- Email service failure
-- Creating a new request while an active token exists
-
-## Known Limitations
-
-Rate limiting has not been implemented yet.
-
-## Questions You Must Be Able to Defend
-
-- Why is the token stored as a hash rather than plaintext?
-- Why was the stateless approach not selected?
-- Why is user existence hidden?
-- How are parallel requests handled?
-- Under which condition should this decision change?
-```
-
-## 🧭 The Four Engineering Questions
-
-This workflow is centered on four questions.
-
-### 1. Why was this code written this way?
-
-Can you explain the reasoning behind the structure and behavior?
-
-### 2. Could another solution have been used?
-
-Do you know at least one viable alternative and the trade-offs between the two approaches?
-
-### 3. Where can this solution break?
-
-Can you predict what happens with unexpected input, larger data, concurrent operations, or failing dependencies?
-
-### 4. Can you defend this decision to another engineer?
-
-Can you explain not only what the decision is, but why it is acceptable now and under which conditions it should change?
-
-> Working code does not mean these questions have been answered.
-
-## When Should It Be Used?
-
-Use the full STAR workflow for changes such as:
-
-- New features
-- Business rule changes
-- Public API contracts
-- Data model changes
-- External service integrations
-- Authentication and authorization
-- Architectural changes
-- Security decisions
-- Meaningful multi-file refactoring
-- Persistent technical decisions
-
-## When Should It Not Be Used?
-
-Not every small task needs a long decision process.
-
-The following tasks can usually be completed directly:
-
-- Typo correction
-- Local variable renaming
-- Documentation updates
-- Formatting
-- Behavior-preserving mechanical changes
-- Small bug fixes with explicit expected behavior
-
-However, use STAR when a small-looking change affects security, data, system behavior, or an external contract.
-
-## Templates
-
-| Template | Purpose |
+| Example | Contents |
 |---|---|
-| `FEATURE-BRIEF.md` | Defines the problem, scope, acceptance criteria, and open decisions before coding. |
-| `STAR-HANDOFF.md` | Records decisions, risks, evidence, and limitations after implementation. |
-| `DECISION-RECORD.md` | Records persistent or costly-to-reverse technical decisions. |
-| `PULL-REQUEST.md` | Helps explain not only what changed, but why. |
+| [Password reset — from request to decisions](examples/password-reset/request.md) | The agent's response before coding and the developer's decisions |
+| [Password reset — handoff](examples/password-reset/completed-handoff.md) | A completed `STAR-HANDOFF.md` that does not hide open risks |
+| [One order, two payments](skills/star-engineering/references/double-payment.md) | Why locking the button alone is not enough |
 
-## Repository Structure
+## When to use it
+
+**STAR mode:** new features or business rules, API contracts, data models or migrations, authentication and authorization, payments, external integrations, concurrency and consistency, meaningful refactors, persistent architectural decisions.
+
+**Direct mode is enough:** typos, renames, formatting, documentation, behavior-preserving mechanical edits, small bug fixes with clear expected behavior.
+
+## What this repository is not
+
+- It is not a security scanner or an automated code review tool.
+- It does not guarantee that code is correct, secure, or production-ready.
+- It does not enforce a specific architecture.
+- It does not replace review by an experienced engineer.
+
+The rules can make you ask the right questions and keep decisions visible. They cannot always reliably judge whether your answers are actually correct.
+
+> A rule file can make you ask questions. Engineering growth requires your answers to be reviewed. For supervised growth: [Softbreak STAR](https://softbreak.net).
+
+## Repository structure
 
 ```text
 star-ai-engineering-workflow/
-│
-├── README.md
-├── README.en.md
-│
-├── rules/
-│   ├── cursor/
-│   │   └── star-engineering.mdc
-│   ├── claude-code/
-│   │   └── CLAUDE.md
-│   ├── github-copilot/
-│   │   └── copilot-instructions.md
-│   ├── codex/
-│   │   └── AGENTS.md
-│   └── universal/
-│       └── STAR-WORKFLOW.md
-│
-├── templates/
-│   ├── FEATURE-BRIEF.md
-│   ├── STAR-HANDOFF.md
-│   ├── DECISION-RECORD.md
-│   └── PULL-REQUEST.md
-│
-├── examples/
-│   └── password-reset/
-│       ├── request.md
-│       └── completed-handoff.md
-│
-└── docs/
-    └── assets/
-        └── softbreak-logo.png
+├── skills/star-engineering/     # Single source: the Agent Skill
+│   ├── SKILL.md
+│   ├── agents/openai.yaml       # Codex interface metadata
+│   ├── assets/                  # Handoff template
+│   └── references/              # Example scenario
+├── rules/                       # Always-on rule files generated from the Skill
+├── templates/                   # Handoff (generated) and optional templates
+├── examples/                    # Completed examples
+├── docs/                        # Installation guide and platform notes
+├── scripts/
+│   ├── build_rules.py           # Generates rules/ from the Skill
+│   └── install_skill.py         # Installation without Node.js
+└── tests/                       # Package, installer, and sync tests
 ```
 
-## What This Repository Is Not
-
-This repository is not:
-
-- a prompt collection,
-- an automatic code review tool,
-- a security scanner,
-- a code quality guarantee,
-- a mandatory architecture,
-- a Clean Architecture template,
-- a system that makes every AI answer correct,
-- a replacement for a mentor or experienced engineering review.
-
-The rules can make questions and decisions visible.
-
-They cannot always determine whether your answer is actually correct.
-
-## The Boundary of STAR
-
-This repository is not the complete STAR methodology.
-
-It is the workflow layer that makes decisions visible during AI-assisted development.
-
-### Free Workflow
-
-- Reduces invisible AI assumptions.
-- Encourages the right questions.
-- Records decisions.
-- Supports developer self-assessment.
-
-### Supervised Engineering Development
-
-- Challenges whether the answer is actually correct.
-- Finds hidden reasoning errors.
-- Opens production work to real code review.
-- Requires rebuilding after feedback.
-- Tracks development over time.
-- Creates external accountability.
-
-> A rule file can help you ask questions.  
-> Engineering development requires your answers to be reviewed.
-
-## Core Principle
-
-AI can produce code.
-
-But the following still require engineering judgment:
-
-- defining the right problem,
-- identifying missing decisions,
-- comparing alternatives,
-- recognizing incorrect output,
-- predicting failure modes,
-- opening code to review,
-- owning the consequences of a decision.
-
-> **This repository does not give you a new project. It gives you an engineering workflow for working more consciously with AI inside your own project.**
+`FEATURE-BRIEF.md`, `DECISION-RECORD.md`, and `PULL-REQUEST.md` under `templates/` are optional, for teams that want a more formal process.
 
 ## Contributing
 
-Open an issue to report a problem, suggest an example, propose a tool integration, or improve a rule.
+Open an [issue](https://github.com/fatihGunalp/star-ai-engineering-workflow/issues) to report a problem, suggest an example, or improve a rule.
 
-Contribution guidelines will be linked here after `CONTRIBUTING.md` is added.
+To change the rule text, **do not edit the files under `rules/` directly**; they are all generated from the Skill:
+
+```bash
+# 1. Edit skills/star-engineering/SKILL.md
+# 2. Regenerate the derived files
+python3 scripts/build_rules.py
+# 3. Run the tests
+python3 -m unittest discover -s tests -v
+```
+
+These tests run automatically on pull requests; CI fails when the generated files do not match the Skill.
 
 ## License
 
-A license file will be added before the repository becomes public.
-
----
-
-<div align="center">
-
-  <p>
-    <strong>Softbreak STAR</strong>
-  </p>
-
-  <p>
-    Not a course; a supervised engineering development system.
-  </p>
-
-</div>
+[MIT](LICENSE) © Fatih Günalp

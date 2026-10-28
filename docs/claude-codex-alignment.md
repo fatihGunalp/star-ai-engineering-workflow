@@ -45,7 +45,7 @@ OpenAI's current distribution recommendation for sharing Skills widely through C
 
 ## Installation paths and distribution are separate concerns
 
-`npx skills add ...` is from the third-party Skills CLI and has been exercised in this repo's GitHub Actions against both Claude Code and Codex consumer paths. It is not a native Anthropic/OpenAI install command. `scripts/install_skill.py` is an independent, stdlib-based fallback. Both install the same provider-neutral folder. This avoids maintaining divergent behavior across `CLAUDE.md`, `AGENTS.md`, and the Skill itself.
+`npx skills add ...` is from the third-party Skills CLI and has been exercised in this repo's GitHub Actions against both Claude Code and Codex consumer paths. It is not a native Anthropic/OpenAI install command. `scripts/install_skill.py` is an independent, stdlib-based fallback. Both install the same provider-neutral folder. The always-on rule files under `rules/` (`CLAUDE.md`, `AGENTS.md`, and others) are generated from the Skill by `scripts/build_rules.py`, and a test fails when they drift, so there is no divergent behavior to maintain.
 
 ## What tests actually prove
 

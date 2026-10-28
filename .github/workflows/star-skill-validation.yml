@@ -4,14 +4,18 @@ on:
   pull_request:
     paths:
       - 'skills/**'
-      - 'scripts/install_skill.py'
+      - 'scripts/**'
+      - 'rules/**'
+      - 'templates/**'
       - 'tests/**'
       - '.github/workflows/star-skill-validation.yml'
   push:
     branches: [main]
     paths:
       - 'skills/**'
-      - 'scripts/install_skill.py'
+      - 'scripts/**'
+      - 'rules/**'
+      - 'templates/**'
       - 'tests/**'
       - '.github/workflows/star-skill-validation.yml'
   workflow_dispatch:

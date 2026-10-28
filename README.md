@@ -13,19 +13,18 @@
   </p>
 
   <p>
-    Cursor, Claude Code, GitHub Copilot, Codex ve benzeri AI araçlarını; doğrudan kod üretmek yerine
-    problemi açıklamaya, kritik kararları görünür hâle getirmeye, alternatifleri
-    karşılaştırmaya, kırılma noktalarını göstermeye ve mühendislik kararlarını
-    kaydetmeye yönlendiren hazır proje kuralları.
+    Claude Code, Codex, Cursor, GitHub Copilot ve Gemini CLI için bir Agent Skill.
+    AI'ın kod yazmadan önce kritik kararları sana sormasını, kırılma noktalarını
+    göstermesini ve gerçekten neyin doğrulandığını dürüstçe raporlamasını sağlar.
   </p>
 
   <p>
-    <img src="https://img.shields.io/badge/Workflow-STAR-F97316" alt="STAR Workflow" />
-    <img src="https://img.shields.io/badge/Cursor-Supported-111827" alt="Cursor Supported" />
+    <img src="https://img.shields.io/badge/Agent_Skill-star--engineering-F97316" alt="Agent Skill: star-engineering" />
     <img src="https://img.shields.io/badge/Claude_Code-Supported-D97757" alt="Claude Code Supported" />
-    <img src="https://img.shields.io/badge/GitHub_Copilot-Supported-24292F" alt="GitHub Copilot Supported" />
     <img src="https://img.shields.io/badge/Codex-Supported-10A37F" alt="Codex Supported" />
-    <img src="https://img.shields.io/badge/Language-TR%20%7C%20EN-2563EB" alt="Turkish and English" />
+    <img src="https://img.shields.io/badge/Cursor-Supported-111827" alt="Cursor Supported" />
+    <img src="https://img.shields.io/badge/GitHub_Copilot-Supported-24292F" alt="GitHub Copilot Supported" />
+    <img src="https://img.shields.io/badge/License-MIT-16A34A" alt="MIT License" />
   </p>
 
   <p>
@@ -40,476 +39,218 @@
     <a href="https://www.youtube.com/@softbreak"><strong>▶ YouTube Kanalı</strong></a>
   </p>
 
-  <p>
-    <a href="#-hızlı-başlangıç">🚀 Hızlı Başlangıç</a>
-    ·
-    <a href="#-nasıl-çalışır">⚙️ Nasıl Çalışır?</a>
-    ·
-    <a href="#-örnek-mühendislik-teslim-kaydı">📄 Örnek Çıktı</a>
-    ·
-    <a href="#-dört-mühendislik-sorusu">🧭 Dört Soru</a>
-  </p>
-
 </div>
 
 ---
 
-<details>
-<summary><strong>STAR AI Engineering Workflow ne yapar?</strong></summary>
+## İçindekiler
 
-<br />
+- [Bu nedir?](#bu-nedir)
+- [Hızlı başlangıç](#-hızlı-başlangıç)
+- [Kullanım](#-kullanım)
+- [Hangi kurulum yolunu seçmeliyim?](#-hangi-kurulum-yolunu-seçmeliyim)
+- [Nasıl çalışır?](#️-nasıl-çalışır)
+- [Örnekler](#-örnekler)
+- [Ne zaman kullanılmalı?](#ne-zaman-kullanılmalı)
+- [Bu repo ne değildir?](#bu-repo-ne-değildir)
+- [Repository yapısı](#repository-yapısı)
+- [Katkıda bulunma](#katkıda-bulunma)
+- [Lisans](#lisans)
 
-Bu çalışma sistemi, AI destekli geliştirme sırasında şu davranışları teşvik eder:
+## Bu nedir?
 
-- Kullanıcının isteğini kod görevine çevirmeden önce problemi yeniden tanımlar.
-- Eksik kabul kriterlerini ve görünmeyen varsayımları ortaya çıkarır.
-- Kullanıcıya ait ürün ve mimari kararlarını sessizce uydurmaz.
-- Uygulanabilir alternatifleri ve bunların bedellerini karşılaştırır.
-- Kırılma senaryolarını ve test planını koddan önce görünür hâle getirir.
-- Değişiklikleri küçük ve açıklanabilir adımlarla üretir.
-- Çalışma sonunda kararları `STAR-HANDOFF.md` dosyasına kaydeder.
+AI'a "şifre sıfırlama özelliği ekle" dediğinde birkaç saniyede çalışan kod alırsın. Ama AI bu sırada senin yerine birçok karar vermiş olur: Token ne kadar geçerli? Tekrar kullanılabilir mi? Kullanıcı yoksa ne cevap dönülür? Aynı anda iki istek gelirse ne olur?
 
-</details>
+**Kodun çalışması, bu kararların sahibi olduğun anlamına gelmez.**
 
-## Neden Bu Repo Var?
-
-AI araçlarına çoğu zaman şöyle bir istek veriyoruz:
-
-```text
-Bu projeye şifre sıfırlama özelliği ekle.
-```
-
-AI birkaç saniye içinde çalışan bir çözüm üretebilir. Ancak bu sırada farkında olmadan birçok karar vermiş olabilir:
-
-- Token nasıl üretilecek?
-- Nerede ve hangi biçimde saklanacak?
-- Ne kadar süre geçerli olacak?
-- Tekrar kullanılabilecek mi?
-- Kullanıcı sistemde yoksa nasıl cevap verilecek?
-- Aynı anda birden fazla istek gelirse ne olacak?
-- Hangi testler yazılacak?
-- Hangi güvenlik ve operasyon maliyetleri kabul edilecek?
-
-Kodun çalışması, bu kararların sahibi olduğun anlamına gelmez.
-
-Bu repo, AI’ın senin yerine görünmez mühendislik kararları vermesini azaltmak ve seni karar sürecinin içinde tutmak için oluşturuldu.
-
-> **Amaç AI’ı yavaşlatmak değil; hızlı üretim sırasında mühendislik sorumluluğunu kaybetmemektir.**
-
-## Önce ve Sonra
+STAR, AI'ın bu görünmez kararları kod yazmadan önce masaya koymasını sağlayan bir çalışma akışıdır:
 
 | STAR olmadan | STAR ile |
 |---|---|
-| İstek doğrudan koda çevrilir. | İstek önce problem olarak yeniden tanımlanır. |
-| Eksik gereksinimler AI tarafından sessizce tamamlanır. | Eksik kararlar kullanıcıya görünür biçimde sorulur. |
-| İlk çalışan çözüm kabul edilir. | Alternatifler ve bedelleri karşılaştırılır. |
-| Kırılma noktaları üretimden sonra fark edilir. | Kırılma senaryoları ve testler koddan önce planlanır. |
-| Kararlar sohbet geçmişinde kaybolur. | Kararlar kalıcı bir mühendislik teslim kaydına yazılır. |
-| Kullanıcı kodu açıklamakta zorlanır. | Kullanıcıya kodu savunması gereken sorular bırakılır. |
+| İstek doğrudan koda çevrilir. | İstek önce problem ve kabul kriteri olarak tanımlanır. |
+| Eksik gereksinimleri AI sessizce tamamlar. | Sana ait kararlar açıkça sorulur. |
+| İlk çalışan çözüm kabul edilir. | Gerçek alternatifler ve bedelleri karşılaştırılır. |
+| Kırılma noktaları üretimde fark edilir. | Kırılma senaryoları ve testler koddan önce belirlenir. |
+| "Testler geçti" denir, çalıştırılıp çalıştırılmadığı belirsizdir. | Gerçekten çalıştırılan ile planlanan kontroller ayrı raporlanır. |
+| Kararlar sohbet geçmişinde kaybolur. | Kararlar kalıcı bir teslim kaydına (`STAR-HANDOFF.md`) yazılır. |
 
-## 🧩 Yeni: Claude Skill ve çoklu Agent desteği
+> **Amaç AI'ı yavaşlatmak değil; hızlı üretim sırasında mühendislik sorumluluğunu kaybetmemek.**
 
-STAR artık yalnızca sürekli yüklü proje kuralları değil, görev gerektiğinde etkinleşebilen **taşınabilir bir Agent Skill** olarak da paketlendi.
+## 🚀 Hızlı başlangıç
 
-- **Tek kaynak:** [`skills/star-engineering/SKILL.md`](skills/star-engineering/SKILL.md)
-- **Tek komutla kurulum:** Claude Code, Codex, Cursor, Gemini CLI ve GitHub Copilot dahil desteklenen agent'lar için `npx skills add`
-- **Alternatif:** Node.js yoksa `scripts/install_skill.py` ile Python kurulumu
-- **Gerçek hayattan örnek:** [Bir yemek siparişinin iki kez tahsil edilmesi](skills/star-engineering/references/double-payment.md) — arayüz kilidinin neden tek başına yeterli olmadığını gösterir.
-- **Tam rehber:** [Skill kurulumu ve doğrulama](docs/skills-quickstart.md)
+**Gereksinim:** [Node.js](https://nodejs.org/) 22.20+ ve desteklenen bir coding agent.
+
+Kendi projenin kök dizininde çalıştır:
 
 ```bash
-# Kendi projenin kök dizininde (PR main'e alındıktan sonra):
 npx skills add fatihGunalp/star-ai-engineering-workflow --skill star-engineering
-
-# Sadece Claude Code'a kullanıcı genelinde kurmak için:
-npx skills add fatihGunalp/star-ai-engineering-workflow --skill star-engineering -a claude-code -g -y
 ```
 
-**Resmî Claude/Codex hizalaması:** Claude Code'da `/star-engineering`, Codex CLI/IDE'de `$star-engineering` ile açıkça çağırabilirsin. İkisi de uygun görevlerde otomatik seçim yapabilir; bu garanti değildir. [Platform uyumluluk notları](docs/claude-codex-alignment.md). `npx skills` üçüncü taraf kurucudur, resmî Anthropic/OpenAI komutu değildir.
+Kurucu hangi agent'lara kurmak istediğini sorar. Bu kadar.
 
-Skill, mevcut `CLAUDE.md` / `AGENTS.md` dosyalarının yerini almak zorunda değildir; uygun görevlerde ihtiyaç üzerine yüklenir. `npx` için Node.js 22.20+ gerekir. Ayrıntılar kurulum rehberinde. **Otomatik hata yakalama veya güvenlik garantisi sağlamaz.**
+Tek bir agent'a, tüm projelerinde geçerli olacak şekilde kurmak istersen:
 
-## 🚀 Hızlı Başlangıç
+```bash
+npx skills add fatihGunalp/star-ai-engineering-workflow --skill star-engineering -g -a claude-code -y
+```
 
-### 1. Kullandığın Aracı Seç
+> `npx skills` üçüncü taraf, açık kaynak bir kurucudur ([Skills CLI](https://github.com/vercel-labs/skills)); Anthropic veya OpenAI'ın resmî komutu değildir. Node.js kullanmıyorsan [Python ile kurulum](docs/skills-quickstart.md#5-python-ile-manuel--bağımlılıksız-alternatif) yapabilirsin.
+
+## 💬 Kullanım
+
+Kurulumdan sonra agent'ını yeniden başlat ve görevi normal şekilde yaz. Anlamlı bir değişiklikse (yeni özellik, API, veri modeli, ödeme, kimlik doğrulama...) agent Skill'i kendisi seçebilir. Açıkça çağırmak için:
+
+| Agent | Komut |
+|---|---|
+| Claude Code | `/star-engineering Şifre sıfırlama özelliği ekle.` |
+| Codex | `$star-engineering Şifre sıfırlama özelliği ekle.` |
+
+Agent doğrudan kod yazmak yerine önce şuna benzer bir yanıt verir:
+
+```text
+Problem: Parolasını unutan kullanıcı destek ekibine yazmadan hesabına dönemiyor.
+
+Senin karar vermen gerekenler:
+1. Token ne kadar süre geçerli olsun?
+2. Yeni talep, eski aktif token'ları geçersiz kılsın mı?
+3. Sıfırlamadan sonra tüm oturumlar kapatılsın mı?
+
+Önerim: Veritabanında hash olarak saklanan tek kullanımlık token.
+Alternatif: İmzalı stateless token — depolama gerektirmez ama iptal edilemez.
+
+Kırılma testleri: aynı token'ın paralel kullanımı, e-posta servisi hatası, süre dolması.
+```
+
+Kararları sen verirsin, kod ondan sonra küçük adımlarla yazılır. İş bitince agent neyin **gerçekten** doğrulandığını raporlar ve `docs/features/<özellik>/STAR-HANDOFF.md` dosyasına bir teslim kaydı yazar.
+
+Yazım hatası düzeltme gibi küçük işlerde STAR araya girmez; agent doğrudan değişikliği yapar.
+
+> Otomatik seçim agent'ın kararıdır ve garanti değildir. Emin olmak istediğinde Skill'i açıkça çağır.
+
+## 🧭 Hangi kurulum yolunu seçmeliyim?
+
+STAR'ın **tek bir kaynağı** var: [`skills/star-engineering/SKILL.md`](skills/star-engineering/SKILL.md). Diğer bütün dosyalar bundan üretilir; içerik her yolda aynıdır. Fark yalnızca **ne zaman yüklendiğidir**.
+
+| Yol | Ne zaman yüklenir? | Kimin için? |
+|---|---|---|
+| **Agent Skill** (önerilen) | Yalnızca görev gerektirdiğinde | Claude Code, Codex, Cursor, Copilot, Gemini CLI |
+| **Sürekli kural dosyası** | Her mesajda, her zaman | Skill desteklemeyen araçlar veya STAR'ı her işte zorunlu kılmak isteyen ekipler |
+| **Universal metin** | Elle yapıştırdığında | ChatGPT gibi sohbet uygulamaları, proje talimatı alanları |
+
+<details>
+<summary><strong>Sürekli kural dosyası kurulumu</strong></summary>
+
+<br />
+
+Kullandığın aracın dosyasını projene kopyala:
 
 | Araç | Kaynak dosya | Projendeki hedef konum |
 |---|---|---|
-| Cursor | `rules/cursor/star-engineering.mdc` | `.cursor/rules/star-engineering.mdc` |
 | Claude Code | `rules/claude-code/CLAUDE.md` | `CLAUDE.md` |
-| GitHub Copilot | `rules/github-copilot/copilot-instructions.md` | `.github/copilot-instructions.md` |
 | Codex | `rules/codex/AGENTS.md` | `AGENTS.md` |
+| Cursor | `rules/cursor/star-engineering.mdc` | `.cursor/rules/star-engineering.mdc` |
+| GitHub Copilot | `rules/github-copilot/copilot-instructions.md` | `.github/copilot-instructions.md` |
 | Diğer araçlar | `rules/universal/STAR-WORKFLOW.md` | Proje talimatları veya kalıcı bağlam alanı |
 
-### 2. Kural Dosyasını Projene Ekle
+Teslim kaydı şablonunu da eklemeyi unutma; kurallar onu bu konumda arar:
 
-Örnek: Cursor kullanıyorsan
-
-```text
-star-ai-engineering-workflow/
-└── rules/
-    └── cursor/
-        └── star-engineering.mdc
+```bash
+mkdir -p docs/star/templates
+cp templates/STAR-HANDOFF.md docs/star/templates/
 ```
 
-dosyasını kendi projen içinde şu konuma kopyala:
+> Projende zaten `CLAUDE.md`, `AGENTS.md` veya benzeri bir dosya varsa üzerine yazma. STAR içeriğini mevcut dosyanın sonuna ekle.
 
-```text
-my-project/
-└── .cursor/
-    └── rules/
-        └── star-engineering.mdc
-```
+</details>
 
-> Projende hâlihazırda `CLAUDE.md`, `AGENTS.md`, `.github/copilot-instructions.md` veya benzeri bir talimat dosyası varsa mevcut içeriği silme. STAR kurallarını proje özelindeki talimatlarla kontrollü biçimde birleştir.
+Kurulum, güncelleme, kaldırma ve doğrulama ayrıntıları için: **[Skill kurulum rehberi](docs/skills-quickstart.md)**.
 
-### 3. Normal İsteğini Yaz
+## ⚙️ Nasıl çalışır?
 
-```text
-Bu projeye şifre sıfırlama özelliği ekle.
-```
+STAR iki moddan oluşur:
 
-AI’ın doğrudan kod üretmek yerine önce şuna benzer bir yanıt vermesi beklenir:
+- **Direct mode** — yazım hatası, biçimlendirme, açıkça tanımlı küçük düzeltmeler. Agent değişikliği yapar ve ne kontrol ettiğini söyler. Rapor, tablo veya teslim kaydı üretmez.
+- **STAR mode** — davranışı, sözleşmeleri, veriyi, güvenliği, eş zamanlılığı veya operasyonu etkileyen değişiklikler. Küçük görünen bir değişiklik de bu kapsama girebilir.
 
-```text
-Çözmeye çalıştığımız problem:
+STAR mode'da agent sırasıyla:
 
-Kullanıcının mevcut parolasını bilmeden, e-posta üzerinden güvenli
-biçimde yeni parola belirleyebilmesi.
+1. **İnceler** — ilgili kodu, testleri ve kuralları okur; gözlemi varsayımdan ayırır.
+2. **Tanımlar** — problemi, mevcut ve istenen davranışı, kapsamı ve kabul kriterlerini yazar.
+3. **Kararları görünür kılar** — sana ait kararları sorar, gerçek alternatifleri karşılaştırır.
+4. **Kırılmayı öngörür** — tekrar, eş zamanlılık, kısmi hata, yetki, zaman aşımı senaryolarını testlere bağlar.
+5. **Güvenli olduğunda uygular** — yalnızca engelleyici kararlar için durur, en küçük tutarlı değişikliği yapar.
+6. **Dürüstçe doğrular** — çalıştırılan, geçen, başarısız olan ve çalıştırılmayan kontrolleri ayrı raporlar.
+7. **Teslim kaydı bırakır** — karar, alternatif, bedel, test ve açık riskleri kaydeder.
 
-Netleştirilmesi gereken kararlar:
+Sonunda dört soruyu cevaplayabilmen gerekir:
 
-- Sıfırlama token'ı ne kadar süre geçerli olacak?
-- Token tek kullanımlık mı olacak?
-- Kullanıcı sistemde bulunmuyorsa nasıl cevap verilecek?
-- Aktif token varken yeni bir talep oluşturulabilecek mi?
+1. **Neden bu şekilde?**
+2. **Başka hangi çözüm vardı?**
+3. **Nerede kırılabilir?**
+4. **Gerçekte ne doğrulandı?**
 
-Uygulanabilir yaklaşımlar:
+## 📚 Örnekler
 
-1. Token'ı veritabanında hash olarak saklamak
-2. İmzalı ve stateless token kullanmak
-
-Bu kararları netleştirmeden kod üretmeye başlamıyorum.
-```
-
-### 4. Kararları Ver ve Üretime Geç
-
-AI’ın ürün ihtiyacını bilmeden veremeyeceği kararları sen netleştirirsin.
-
-Ardından kod:
-
-- küçük adımlarla,
-- açıklanabilir değişikliklerle,
-- görünür varsayımlarla,
-- önceden belirlenmiş test senaryolarıyla
-
-üretilir.
-
-### 5. Teslim Kaydını Al
-
-Çalışma sonunda aşağıdaki gibi bir dosya oluşturulur:
-
-```text
-docs/features/password-reset/STAR-HANDOFF.md
-```
-
-Bu dosya, yalnızca ne yapıldığını değil, **neden yapıldığını** da kaydeder.
-
-## ⚙️ Nasıl Çalışır?
-
-STAR mühendislik akışı üç aşamadan oluşur.
-
-### 1. Koddan Önce
-
-AI:
-
-1. İsteği çözülmesi gereken problem olarak yeniden tanımlar.
-2. Eksik kabul kriterlerini belirler.
-3. Kullanıcıya sorulmadan verilmemesi gereken kararları görünür hâle getirir.
-4. Uygulanabilir alternatifleri karşılaştırır.
-5. Önerdiği yaklaşımın avantajlarını ve bedellerini açıklar.
-6. Muhtemel kırılma senaryolarını belirler.
-7. Yazılması gereken testleri koddan önce listeler.
-
-### 2. Kod Sırasında
-
-AI:
-
-- küçük ve açıklanabilir değişiklikler yapar,
-- varsayımlarını gizlemez,
-- kapsam dışına sessizce çıkmaz,
-- kullanıcıya ait ürün kararlarını kendisi uydurmaz,
-- yaptığı değişikliğin yalnızca ne olduğunu değil, nedenini de açıklar.
-
-### 3. Koddan Sonra
-
-AI:
-
-1. Yapılan değişiklikleri özetler.
-2. Seçilen yaklaşımı ve nedenini kaydeder.
-3. Değerlendirilen alternatifleri belirtir.
-4. Kırılma noktalarını ve bilinen sınırlamaları yazar.
-5. Yazılan ve eksik kalan testleri listeler.
-6. Açık kararları görünür bırakır.
-7. Kullanıcının kodu savunabilmesi için sorular üretir.
-8. `STAR-HANDOFF.md` dosyasını oluşturur.
-
-## 📄 Örnek Mühendislik Teslim Kaydı
-
-```markdown
-# Şifre Sıfırlama — Mühendislik Teslim Kaydı
-
-## Çözülen Problem
-
-Kullanıcıların mevcut parolalarını bilmeden, e-posta üzerinden
-güvenli biçimde yeni parola belirleyebilmesi.
-
-## Kabul Kriterleri
-
-- Geçerli kullanıcı sıfırlama bağlantısı talep edebilmeli.
-- Kullanıcı sistemde bulunmasa bile aynı genel yanıt dönülmeli.
-- Token yalnızca bir kez kullanılabilmeli.
-- Süresi dolmuş token reddedilmeli.
-- Başarılı işlem sonrasında eski parola geçersiz olmalı.
-
-## Seçilen Yaklaşım
-
-Tek kullanımlık, veritabanında hash olarak saklanan sıfırlama token'ı.
-
-## Neden Bu Yaklaşım Seçildi?
-
-Token'ın iptal edilebilmesi, kullanımının takip edilebilmesi ve tekrar
-kullanımının engellenmesi gerektiği için.
-
-## Değerlendirilen Alternatif
-
-İmzalı ve stateless token.
-
-### Avantajı
-
-Token doğrulaması için veritabanı sorgusu gerektirmemesi.
-
-### Neden Seçilmedi?
-
-Tekil token iptali, tekrar kullanım kontrolü ve kullanım takibi daha zor.
-
-## Kararın Bedeli
-
-- Token üretimi ve doğrulaması için veritabanı erişimi gerekir.
-- Süresi dolan token kayıtları için temizleme stratejisi gerekir.
-- Paralel talepler için tutarlılık kuralları açıkça tanımlanmalıdır.
-
-## Nerede Kırılabilir?
-
-- Aynı token iki kez kullanılırsa
-- Aynı kullanıcı paralel sıfırlama talepleri gönderirse
-- E-posta servisi başarısız olursa
-- Token süresi işlem sırasında dolarsa
-- Veritabanı işlemi yarıda kalırsa
-
-## Yazılan Testler
-
-- Geçerli token ile parola değiştirilebilir
-- Süresi dolmuş token reddedilir
-- Kullanılmış token tekrar kullanılamaz
-- Olmayan kullanıcı için kullanıcı varlığı açığa çıkarılmaz
-
-## Eksik Kalan Testler
-
-- Paralel token kullanım denemesi
-- E-posta servisi başarısızlığı
-- Aktif token varken yeni talep oluşturulması
-
-## Bilinen Sınırlamalar
-
-Rate limiting henüz uygulanmadı.
-
-## Bu Kararı Savunmak İçin Bilmen Gerekenler
-
-- Token neden düz metin olarak saklanmıyor?
-- Stateless yaklaşım neden tercih edilmedi?
-- Kullanıcı varlığı neden gizleniyor?
-- Paralel istekler nasıl yönetiliyor?
-- Bu karar hangi koşullarda değiştirilmelidir?
-```
-
-## 🧭 Dört Mühendislik Sorusu
-
-Bu çalışma sisteminin merkezinde dört soru bulunur.
-
-### 1. Bu kod neden böyle yazıldı?
-
-Kullanılan yapının ve verilen kararın arkasındaki nedeni açıklayabiliyor musun?
-
-### 2. Başka bir çözüm olabilir miydi?
-
-En az bir uygulanabilir alternatifi ve iki yaklaşım arasındaki bedelleri biliyor musun?
-
-### 3. Bu çözüm nerede kırılır?
-
-Beklenmeyen girdilerde, veri büyüdüğünde, eş zamanlı işlemlerde veya bağımlılıklar başarısız olduğunda ne olacağını öngörebiliyor musun?
-
-### 4. Bu kararı bir başkasına savunabilir misin?
-
-Kararın yalnızca ne olduğunu değil, neden kabul edilebilir olduğunu ve hangi koşullarda değiştirilmesi gerektiğini açıklayabiliyor musun?
-
-> Kodun çalışması, bu soruların cevaplandığı anlamına gelmez.
-
-## Ne Zaman Kullanılmalı?
-
-Tam STAR akışı özellikle şu tür değişikliklerde kullanılmalıdır:
-
-- Yeni özellik geliştirme
-- İş kuralı ekleme veya değiştirme
-- API sözleşmesi oluşturma
-- Veri modeli değişikliği
-- Harici servis entegrasyonu
-- Kimlik doğrulama ve yetkilendirme
-- Mimari değişiklik
-- Güvenlik kararı
-- Birden fazla dosyayı etkileyen anlamlı refactoring
-- Kalıcı teknik karar
-
-## Ne Zaman Kullanılmamalı?
-
-Her küçük işlem için uzun bir karar süreci gerekmez.
-
-Aşağıdaki işler genellikle doğrudan yapılabilir:
-
-- Yazım hatası düzeltme
-- Değişken adı değiştirme
-- Açıklama veya dokümantasyon güncelleme
-- Basit biçimlendirme
-- Davranış değiştirmeyen mekanik düzenleme
-- Açıkça tanımlanmış küçük hata düzeltmesi
-
-Ancak küçük görünen bir değişiklik güvenliği, veriyi, sistem davranışını veya dışarıya açık bir sözleşmeyi etkiliyorsa STAR akışı uygulanmalıdır.
-
-## Şablonlar
-
-| Şablon | Amaç |
+| Örnek | İçerik |
 |---|---|
-| `FEATURE-BRIEF.md` | Koddan önce problemi, kapsamı, kabul kriterlerini ve açık kararları tanımlar. |
-| `STAR-HANDOFF.md` | Çalışma sonunda yapılan kararları, riskleri ve sınırlamaları kaydeder. |
-| `DECISION-RECORD.md` | Kalıcı veya geri döndürülmesi maliyetli teknik kararları kayıt altına alır. |
-| `PULL-REQUEST.md` | Değişikliğin yalnızca ne yaptığını değil, neden yapıldığını açıklamaya yardımcı olur. |
+| [Şifre sıfırlama — istekten kararlara](examples/password-reset/request.md) | Agent'ın koddan önceki yanıtı ve geliştiricinin verdiği kararlar |
+| [Şifre sıfırlama — teslim kaydı](examples/password-reset/completed-handoff.md) | Doldurulmuş, açık riskleri gizlemeyen bir `STAR-HANDOFF.md` |
+| [Bir siparişin iki kez tahsil edilmesi](skills/star-engineering/references/double-payment.md) | Arayüz kilidinin neden tek başına yeterli olmadığı |
 
-## Repository Yapısı
+## Ne zaman kullanılmalı?
+
+**STAR mode için:** yeni özellik veya iş kuralı, API sözleşmesi, veri modeli veya migration, kimlik doğrulama ve yetkilendirme, ödeme, harici servis entegrasyonu, eş zamanlılık ve tutarlılık, anlamlı refactoring, kalıcı mimari kararlar.
+
+**Direct mode yeterli:** yazım hatası, değişken adı, biçimlendirme, dokümantasyon, davranış değiştirmeyen mekanik düzenlemeler, beklenen davranışı açık küçük hata düzeltmeleri.
+
+## Bu repo ne değildir?
+
+- Bir güvenlik tarayıcısı veya otomatik code review aracı değildir.
+- Kodun doğru, güvenli veya production-ready olduğunu garanti etmez.
+- Belirli bir mimariyi zorunlu tutmaz.
+- Deneyimli bir mühendisin denetiminin yerini almaz.
+
+Kurallar doğru soruları sordurabilir ve kararları görünür kılabilir. Verdiğin cevabın gerçekten doğru olup olmadığını ise her zaman güvenilir biçimde değerlendiremez.
+
+> Bir kural dosyası sana soru sordurabilir. Mühendislik gelişimi ise verdiğin cevapların denetlenmesini gerektirir. Denetimli gelişim için: [Softbreak STAR](https://softbreak.net).
+
+## Repository yapısı
 
 ```text
 star-ai-engineering-workflow/
-│
-├── README.md
-├── README.en.md
-│
-├── rules/
-│   ├── cursor/
-│   │   └── star-engineering.mdc
-│   ├── claude-code/
-│   │   └── CLAUDE.md
-│   ├── github-copilot/
-│   │   └── copilot-instructions.md
-│   ├── codex/
-│   │   └── AGENTS.md
-│   └── universal/
-│       └── STAR-WORKFLOW.md
-│
-├── templates/
-│   ├── FEATURE-BRIEF.md
-│   ├── STAR-HANDOFF.md
-│   ├── DECISION-RECORD.md
-│   └── PULL-REQUEST.md
-│
-├── examples/
-│   └── password-reset/
-│       ├── request.md
-│       └── completed-handoff.md
-│
-└── docs/
-    └── assets/
-        └── softbreak-logo.png
+├── skills/star-engineering/     # Tek kaynak: Agent Skill
+│   ├── SKILL.md
+│   ├── agents/openai.yaml       # Codex arayüz bilgisi
+│   ├── assets/                  # Teslim kaydı şablonu
+│   └── references/              # Örnek senaryo
+├── rules/                       # Skill'den üretilen sürekli kural dosyaları
+├── templates/                   # Teslim kaydı (üretilir) ve ek şablonlar
+├── examples/                    # Tamamlanmış örnekler
+├── docs/                        # Kurulum rehberi ve platform notları
+├── scripts/
+│   ├── build_rules.py           # rules/ dosyalarını Skill'den üretir
+│   └── install_skill.py         # Node.js olmadan kurulum
+└── tests/                       # Paket, kurucu ve senkron testleri
 ```
 
-## Bu Repo Ne Değildir?
+`templates/` altındaki `FEATURE-BRIEF.md`, `DECISION-RECORD.md` ve `PULL-REQUEST.md` isteğe bağlıdır. Daha resmî bir süreç isteyen ekipler bunları kullanabilir.
 
-Bu repo:
+## Katkıda bulunma
 
-- prompt koleksiyonu değildir,
-- otomatik code review aracı değildir,
-- güvenlik tarayıcısı değildir,
-- kod kalite garantisi vermez,
-- belirli bir mimariyi zorunlu tutmaz,
-- Clean Architecture şablonu değildir,
-- AI’ın verdiği her cevabı doğru hâle getirmez,
-- mentor veya deneyimli mühendis denetiminin yerini almaz.
+Hata bildirimi, örnek senaryo veya kural iyileştirmesi için [issue](https://github.com/fatihGunalp/star-ai-engineering-workflow/issues) açabilirsin.
 
-Kurallar soru sordurabilir ve kararları görünür hâle getirebilir.
+Kural metnini değiştirmek istiyorsan `rules/` altındaki dosyaları **doğrudan düzenleme**; hepsi Skill'den üretilir:
 
-Fakat verdiğin cevabın gerçekten doğru olup olmadığını her zaman güvenilir biçimde değerlendiremez.
+```bash
+# 1. skills/star-engineering/SKILL.md dosyasını düzenle
+# 2. Üretilen dosyaları güncelle
+python3 scripts/build_rules.py
+# 3. Testleri çalıştır
+python3 -m unittest discover -s tests -v
+```
 
-## STAR ile Sınırı
-
-Bu repository, STAR metodolojisinin tamamı değildir.
-
-Yalnızca AI destekli geliştirme sırasında kararları görünür hâle getiren çalışma katmanıdır.
-
-### Ücretsiz Workflow
-
-- AI’ın görünmez varsayımlarını azaltır.
-- Doğru soruların sorulmasını teşvik eder.
-- Kararların kayıt altına alınmasını sağlar.
-- Kullanıcının öz değerlendirme yapmasına yardım eder.
-
-### Denetimli Mühendislik Gelişimi
-
-- Verilen cevabın gerçekten doğru olup olmadığını sorgular.
-- Görünmeyen düşünce hatalarını yakalar.
-- Üretimi gerçek code review’a açar.
-- Geri bildirimden sonra yeniden üretimi zorunlu kılar.
-- Gelişimi zaman içinde takip eder.
-- Dış denetim ve sorumluluk oluşturur.
-
-> Bir kural dosyası sana soru sordurabilir.  
-> Mühendislik gelişimi ise verdiğin cevapların denetlenmesini gerektirir.
-
-## Temel İlke
-
-AI kod üretebilir.
-
-Fakat:
-
-- problemi doğru tanımlamak,
-- eksik kararları görmek,
-- alternatifleri değerlendirmek,
-- hatalı çıktıyı fark etmek,
-- kırılma noktalarını öngörmek,
-- kodu denetime açmak,
-- verilen kararın sorumluluğunu almak
-
-hâlâ mühendislik işidir.
-
-> **Bu repo sana yeni bir proje vermiyor. Kendi projen üzerinde AI ile daha bilinçli çalışmanı sağlayan bir mühendislik sistemi veriyor.**
-
-## Katkıda Bulunma
-
-Hata bildirimi, örnek senaryo, araç entegrasyonu veya kural iyileştirmesi önerileri için issue açabilirsin.
-
-Katkı kuralları `CONTRIBUTING.md` dosyası eklendikten sonra burada ayrıca bağlantılanacaktır.
+Pull request'lerde bu testler otomatik çalışır; üretilen dosyalar Skill ile uyuşmazsa CI başarısız olur.
 
 ## Lisans
 
-Lisans dosyası repository public olmadan önce eklenecektir.
-
----
-
-<div align="center">
-
-  <p>
-    <strong>Softbreak STAR</strong>
-  </p>
-
-  <p>
-    Eğitim değil; denetimli mühendislik gelişim sistemi.
-  </p>
-
-</div>
+[MIT](LICENSE) © Fatih Günalp
