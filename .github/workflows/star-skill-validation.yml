@@ -1,0 +1,36 @@
+name: Validate STAR Agent Skill
+
+on:
+  pull_request:
+    paths:
+      - 'skills/**'
+      - 'scripts/install_skill.py'
+      - 'tests/**'
+      - '.github/workflows/star-skill-validation.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'skills/**'
+      - 'scripts/install_skill.py'
+      - 'tests/**'
+      - '.github/workflows/star-skill-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  portable-skill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify Python syntax
+        run: python -m compileall -q scripts tests
+      - name: Validate package and installer
+        run: python -m unittest discover -s tests -v
