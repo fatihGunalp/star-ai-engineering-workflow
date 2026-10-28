@@ -112,17 +112,20 @@ This repository exists to reduce invisible engineering decisions made on your be
 STAR is now available as an **on-demand Agent Skill**, in addition to always-on project instruction files.
 
 - **Canonical skill:** [`skills/star-engineering/SKILL.md`](skills/star-engineering/SKILL.md)
-- **Installer:** `scripts/install_skill.py` for Claude Code, Codex, Gemini CLI, GitHub Copilot agents, and Cursor
+- **One-command install:** `npx skills add` for supported agents including Claude Code, Codex, Cursor, Gemini CLI and GitHub Copilot
+- **Fallback:** `scripts/install_skill.py` for Python-based installation without Node.js
 - **Everyday scenario:** [One dinner order accidentally charged twice](skills/star-engineering/references/double-payment.md)
 - **Installation guide:** [Setup and limitations](docs/skills-quickstart.md)
 
 ```bash
-# From this cloned repository, specify your own app's path:
-python3 scripts/install_skill.py --tool claude --project /path/to/my-app
-python3 scripts/install_skill.py --tool codex --project /path/to/my-app
+# Run inside your application project (after the PR merges to main):
+npx skills add fatihGunalp/star-ai-engineering-workflow --skill star-engineering
+
+# Claude Code, global install:
+npx skills add fatihGunalp/star-ai-engineering-workflow --skill star-engineering -a claude-code -g -y
 ```
 
-The skill complements existing `CLAUDE.md` and `AGENTS.md` project rules rather than replacing them. It **cannot guarantee correctness or security**.
+The skill activates on relevant tasks and complements existing `CLAUDE.md` and `AGENTS.md` project rules. Node.js 22.20+ is required for the npx path. See the installation guide. It **cannot guarantee correctness or security**.
 
 ## 🚀 Quick Start
 
