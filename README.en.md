@@ -107,6 +107,23 @@ This repository exists to reduce invisible engineering decisions made on your be
 | Decisions disappear inside chat history. | Decisions are recorded in a persistent engineering handoff. |
 | The developer struggles to explain the code. | The developer receives implementation-specific questions they must be able to defend. |
 
+## 🧩 New: Portable Agent Skill
+
+STAR is now available as an **on-demand Agent Skill**, in addition to always-on project instruction files.
+
+- **Canonical skill:** [`skills/star-engineering/SKILL.md`](skills/star-engineering/SKILL.md)
+- **Installer:** `scripts/install_skill.py` for Claude Code, Codex, Gemini CLI, GitHub Copilot agents, and Cursor
+- **Everyday scenario:** [One dinner order accidentally charged twice](skills/star-engineering/references/double-payment.md)
+- **Installation guide:** [Setup and limitations](docs/skills-quickstart.md)
+
+```bash
+# From this cloned repository, specify your own app's path:
+python3 scripts/install_skill.py --tool claude --project /path/to/my-app
+python3 scripts/install_skill.py --tool codex --project /path/to/my-app
+```
+
+The skill complements existing `CLAUDE.md` and `AGENTS.md` project rules rather than replacing them. It **cannot guarantee correctness or security**.
+
 ## 🚀 Quick Start
 
 ### 1. Choose Your Tool
