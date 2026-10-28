@@ -56,7 +56,7 @@ Never infer a passing test from plausible code. Never claim production readiness
 
 ## 7. Record the handoff for consequential work
 
-For completed STAR-mode implementation, create/update `docs/features/<feature-slug>/STAR-HANDOFF.md` when the project permits writing; otherwise return the handoff in the response. Adapt the format to the team's existing documentation.
+For completed STAR-mode implementation, create/update `docs/features/<feature-slug>/STAR-HANDOFF.md` when the project permits writing; otherwise return the handoff in the response. Use the bundled [handoff template](assets/handoff-template.md) **when the target project has no equivalent**; preserve the project's existing documentation conventions when they exist. The skill must remain usable without any other files from the source repository.
 
 Record: problem, accepted scope and criteria, selected approach and rejected alternatives, decision costs, failure modes, test results/evidence, limitations, open decisions, changed files, and questions the developer must be able to defend.
 
