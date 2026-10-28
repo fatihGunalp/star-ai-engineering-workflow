@@ -47,3 +47,11 @@ jobs:
           test -f .agents/skills/star-engineering/SKILL.md || test -f .claude/skills/star-engineering/SKILL.md
           test -f .agents/skills/star-engineering/assets/handoff-template.md || test -f .claude/skills/star-engineering/assets/handoff-template.md
           npx --yes skills@1.7.4 list
+
+          # A second consumer project verifies Codex installation independently.
+          mkdir -p "$RUNNER_TEMP/star-codex-consumer"
+          cd "$RUNNER_TEMP/star-codex-consumer"
+          npx --yes skills@1.7.4 add "$GITHUB_WORKSPACE" --skill star-engineering -a codex --copy -y
+          test -f .agents/skills/star-engineering/SKILL.md || test -f .codex/skills/star-engineering/SKILL.md
+          test -f .agents/skills/star-engineering/assets/handoff-template.md || test -f .codex/skills/star-engineering/assets/handoff-template.md
+          npx --yes skills@1.7.4 list
