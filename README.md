@@ -112,17 +112,20 @@ Bu repo, AI’ın senin yerine görünmez mühendislik kararları vermesini azal
 STAR artık yalnızca sürekli yüklü proje kuralları değil, görev gerektiğinde etkinleşebilen **taşınabilir bir Agent Skill** olarak da paketlendi.
 
 - **Tek kaynak:** [`skills/star-engineering/SKILL.md`](skills/star-engineering/SKILL.md)
-- **Kurulum:** Claude Code, Codex, Gemini CLI, GitHub Copilot agent ve Cursor için bağımlılıksız `scripts/install_skill.py`
+- **Tek komutla kurulum:** Claude Code, Codex, Cursor, Gemini CLI ve GitHub Copilot dahil desteklenen agent'lar için `npx skills add`
+- **Alternatif:** Node.js yoksa `scripts/install_skill.py` ile Python kurulumu
 - **Gerçek hayattan örnek:** [Bir yemek siparişinin iki kez tahsil edilmesi](skills/star-engineering/references/double-payment.md) — arayüz kilidinin neden tek başına yeterli olmadığını gösterir.
 - **Tam rehber:** [Skill kurulumu ve doğrulama](docs/skills-quickstart.md)
 
 ```bash
-# Bu repo klonlandıktan sonra, kendi uygulamanız için:
-python3 scripts/install_skill.py --tool claude --project /path/to/my-app
-python3 scripts/install_skill.py --tool codex --project /path/to/my-app
+# Kendi projenin kök dizininde (PR main'e alındıktan sonra):
+npx skills add fatihGunalp/star-ai-engineering-workflow --skill star-engineering
+
+# Sadece Claude Code'a kullanıcı genelinde kurmak için:
+npx skills add fatihGunalp/star-ai-engineering-workflow --skill star-engineering -a claude-code -g -y
 ```
 
-Skill, mevcut `CLAUDE.md` / `AGENTS.md` dosyalarının yerini almak zorunda değildir; farklı bir kullanım katmanıdır. **Otomatik hata yakalama veya güvenlik garantisi sağlamaz.**
+Skill, mevcut `CLAUDE.md` / `AGENTS.md` dosyalarının yerini almak zorunda değildir; uygun görevlerde ihtiyaç üzerine yüklenir. `npx` için Node.js 22.20+ gerekir. Ayrıntılar kurulum rehberinde. **Otomatik hata yakalama veya güvenlik garantisi sağlamaz.**
 
 ## 🚀 Hızlı Başlangıç
 
