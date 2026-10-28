@@ -30,14 +30,6 @@ npx skills add fatihGunalp/star-ai-engineering-workflow --skill star-engineering
 
 Kullanıcı geneli kurulum, aynı makinedeki uygun yerel oturumlarda her projeye ayrı dosya eklemenizi gerektirmez. Hangi modelin/uygulamanın Skill'i keşfettiği o uygulamanın desteğine bağlıdır. Claude, Codex, Cursor, Gemini CLI ve Copilot desteği için araç seçimini standart CLI'ya bırakmak, klasörleri elle yönetmekten daha güvenilirdir.
 
-**Durum notu:** Bu sürüm `feat/portable-star-agent-skill` dalında PR olarak hazırlanmıştır. Yukarıdaki `owner/repo` komutları `main` dalındaki içeriği kurar; Skill ancak PR merge edildiğinde bu yolla erişilebilir. Merge öncesi yerel test için:
-
-```bash
-git clone --branch feat/portable-star-agent-skill https://github.com/fatihGunalp/star-ai-engineering-workflow.git
-cd star-ai-engineering-workflow
-npx skills add ./skills/star-engineering --skill star-engineering -a claude-code -y
-```
-
 ## 2. Claude Code ve Codex: resmî kullanım
 
 **Claude Code:** Kurulu skill'in adı `star-engineering` ise prompt'un başında `/star-engineering` yazarak açıkça çalıştırabilirsiniz. Alternatif olarak uygun mühendislik görevini normal şekilde tarif ettiğinizde Claude skill'i otomatik seçebilir. Proje kapsamı `.claude/skills/star-engineering/SKILL.md`, kullanıcı kapsamı `~/.claude/skills/star-engineering/SKILL.md`. Doğrudan çağırma ve otomatik kullanım açık kalır; `disable-model-invocation`, `user-invocable: false`, otomatik tool izni veya zorunlu alt-agent kısıtlaması eklenmemiştir.
@@ -93,7 +85,7 @@ Windows'ta `python3` yerine `py -3` kullanabilirsiniz. `--scope user` kullanıc�
 
 ## 6. Claude.ai web ve başka sohbet modelleri
 
-Claude.ai'nin özel Skill ZIP yükleme yeteneği erişiminizdeyse `skills/star-engineering/` klasörünü `SKILL.md` dosyasıyla birlikte ZIP'leyip yükleyin. Bu yol, Claude Code kurulumu değildir. ChatGPT gibi bir sohbet uygulaması bu agent keşfini desteklemiyorsa `rules/universal/STAR-WORKFLOW.md` dosyasını proje talimatı olarak kullanabilirsiniz; bunu otomatik Skill etkinleşmesiyle karıştırmayın.
+Claude.ai'nin özel Skill ZIP yükleme yeteneği erişiminizdeyse `skills/star-engineering/` klasörünü `SKILL.md` dosyasıyla birlikte ZIP'leyip yükleyin. Bu yol, Claude Code kurulumu değildir. ChatGPT gibi bir sohbet uygulaması bu agent keşfini desteklemiyorsa `rules/universal/STAR-WORKFLOW.md` dosyasını proje talimatı olarak kullanabilirsiniz; bunu otomatik Skill etkinleşmesiyle karıştırmayın. Bu dosya Skill'den otomatik üretilir, içerik aynıdır.
 
 ## 7. Paket testleri
 
@@ -107,5 +99,4 @@ Testler paket sözleşmesini ve Python kurulum davranışını kontrol eder. Ger
 
 - Kullanıcının ürün ve yüksek etkili mühendislik kararlarını agent sessizce vermemelidir.
 - Skill bir güvenlik tarayıcısı veya kod doğruluk garantisi değildir.
-- Instagram yorumlarına otomatik DM göndermeyi sağlamaz; bunun ayrı bir Meta uyumlu otomasyona ihtiyacı vardır.
-- Kamusal yeniden kullanım ve çatallama hakları için repository'nin lisansı ayrıca netleştirilmelidir.
+- Repository [MIT Lisansı](../LICENSE) ile dağıtılır.

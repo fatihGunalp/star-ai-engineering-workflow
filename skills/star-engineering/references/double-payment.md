@@ -1,6 +1,6 @@
 # Everyday case: One order, two payments
 
-> Illustrative scenario for learning and Reels. This is **not** a report of a real incident, a tested fix, or a claim about payment providers.
+> Illustrative scenario for learning. This is **not** a report of a real incident, a tested fix, or a claim about payment providers.
 
 ## The ordinary problem
 
@@ -47,15 +47,3 @@ Required tests:
 **Without STAR:** The assistant may solve only the visible UI symptom.
 
 **With STAR:** It makes the hidden backend requirements, owner decisions, and failure tests visible *before* implementation. It does not guarantee that code will be correct; evidence still requires executable tests and review.
-
-## Reels demonstration (about 25–35 seconds, suggested script)
-
-- **Hook:** “Yemek siparişinde Öde'ye iki kez bastın. Kartından iki kere para çekildi.”
-- **Problem:** “AI'a 'butonu kilitle' dedin. Çalışıyor gibi görünüyor.”
-- **Reveal:** “Ama internet kopup istek tekrar gönderilince? Butonun kilitli olması sunucuyu korumuyor.”
-- **Payoff:** “STAR, koddan önce şu soruyu sorduruyor: Aynı ödeme isteği iki kez gelirse ne olacak?”
-- **CTA:** “Yazılım projenizde bu kontrol akışını denemek için yoruma **STAR** yazabilirsiniz.”
-
-## Honest distribution note
-
-The repository provides the **skill and installation instructions**. Instagram comment-to-DM delivery is a separate Meta/third-party messaging automation and is **not** implemented by this repository. Do not promise an automatic link until that integration has been configured and tested.
