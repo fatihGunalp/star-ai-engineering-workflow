@@ -3,6 +3,7 @@
 Run with: python3 -m unittest discover -s tests -v
 No external libraries or network are required.
 """
+import json
 import re
 import unittest
 from pathlib import Path
@@ -26,8 +27,12 @@ class PortableSkillContractTests(unittest.TestCase):
         self.assertEqual(keys.get("name"), "star-engineering")
         self.assertRegex(keys["name"], r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
         self.assertLessEqual(len(keys["name"]), 64)
-        self.assertTrue(keys.get("description", "").strip())
-        self.assertLessEqual(len(keys["description"]), 1024)
+        # Quoted JSON strings are valid YAML scalars; unquoted colons in a
+        # description can break discovery even when a naive parser accepts it.
+        self.assertTrue(keys.get("description", "").startswith('"'))
+        description = json.loads(keys["description"])
+        self.assertTrue(description.strip())
+        self.assertLessEqual(len(description), 1024)
         self.assertLess(len(text.splitlines()), 500)
         self.assertIn("Direct mode", text)
         self.assertIn("STAR mode", text)
