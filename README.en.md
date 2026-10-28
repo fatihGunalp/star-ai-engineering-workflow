@@ -107,6 +107,28 @@ This repository exists to reduce invisible engineering decisions made on your be
 | Decisions disappear inside chat history. | Decisions are recorded in a persistent engineering handoff. |
 | The developer struggles to explain the code. | The developer receives implementation-specific questions they must be able to defend. |
 
+## 🧩 New: Portable Agent Skill
+
+STAR is now available as an **on-demand Agent Skill**, in addition to always-on project instruction files.
+
+- **Canonical skill:** [`skills/star-engineering/SKILL.md`](skills/star-engineering/SKILL.md)
+- **One-command install:** `npx skills add` for supported agents including Claude Code, Codex, Cursor, Gemini CLI and GitHub Copilot
+- **Fallback:** `scripts/install_skill.py` for Python-based installation without Node.js
+- **Everyday scenario:** [One dinner order accidentally charged twice](skills/star-engineering/references/double-payment.md)
+- **Installation guide:** [Setup and limitations](docs/skills-quickstart.md)
+
+```bash
+# Run inside your application project (after the PR merges to main):
+npx skills add fatihGunalp/star-ai-engineering-workflow --skill star-engineering
+
+# Claude Code, global install:
+npx skills add fatihGunalp/star-ai-engineering-workflow --skill star-engineering -a claude-code -g -y
+```
+
+**Official Claude/Codex alignment:** Explicit invocation is `/star-engineering` in Claude Code and `$star-engineering` in Codex CLI/IDE. Both can select the skill implicitly; automatic selection is not guaranteed. [Platform alignment notes](docs/claude-codex-alignment.md). The `npx skills` installer is third-party, not an official Anthropic/OpenAI installer.
+
+The skill activates on relevant tasks and complements existing `CLAUDE.md` and `AGENTS.md` project rules. Node.js 22.20+ is required for the npx path. See the installation guide. It **cannot guarantee correctness or security**.
+
 ## 🚀 Quick Start
 
 ### 1. Choose Your Tool

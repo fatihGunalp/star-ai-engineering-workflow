@@ -107,6 +107,28 @@ Bu repo, AI’ın senin yerine görünmez mühendislik kararları vermesini azal
 | Kararlar sohbet geçmişinde kaybolur. | Kararlar kalıcı bir mühendislik teslim kaydına yazılır. |
 | Kullanıcı kodu açıklamakta zorlanır. | Kullanıcıya kodu savunması gereken sorular bırakılır. |
 
+## 🧩 Yeni: Claude Skill ve çoklu Agent desteği
+
+STAR artık yalnızca sürekli yüklü proje kuralları değil, görev gerektiğinde etkinleşebilen **taşınabilir bir Agent Skill** olarak da paketlendi.
+
+- **Tek kaynak:** [`skills/star-engineering/SKILL.md`](skills/star-engineering/SKILL.md)
+- **Tek komutla kurulum:** Claude Code, Codex, Cursor, Gemini CLI ve GitHub Copilot dahil desteklenen agent'lar için `npx skills add`
+- **Alternatif:** Node.js yoksa `scripts/install_skill.py` ile Python kurulumu
+- **Gerçek hayattan örnek:** [Bir yemek siparişinin iki kez tahsil edilmesi](skills/star-engineering/references/double-payment.md) — arayüz kilidinin neden tek başına yeterli olmadığını gösterir.
+- **Tam rehber:** [Skill kurulumu ve doğrulama](docs/skills-quickstart.md)
+
+```bash
+# Kendi projenin kök dizininde (PR main'e alındıktan sonra):
+npx skills add fatihGunalp/star-ai-engineering-workflow --skill star-engineering
+
+# Sadece Claude Code'a kullanıcı genelinde kurmak için:
+npx skills add fatihGunalp/star-ai-engineering-workflow --skill star-engineering -a claude-code -g -y
+```
+
+**Resmî Claude/Codex hizalaması:** Claude Code'da `/star-engineering`, Codex CLI/IDE'de `$star-engineering` ile açıkça çağırabilirsin. İkisi de uygun görevlerde otomatik seçim yapabilir; bu garanti değildir. [Platform uyumluluk notları](docs/claude-codex-alignment.md). `npx skills` üçüncü taraf kurucudur, resmî Anthropic/OpenAI komutu değildir.
+
+Skill, mevcut `CLAUDE.md` / `AGENTS.md` dosyalarının yerini almak zorunda değildir; uygun görevlerde ihtiyaç üzerine yüklenir. `npx` için Node.js 22.20+ gerekir. Ayrıntılar kurulum rehberinde. **Otomatik hata yakalama veya güvenlik garantisi sağlamaz.**
+
 ## 🚀 Hızlı Başlangıç
 
 ### 1. Kullandığın Aracı Seç
