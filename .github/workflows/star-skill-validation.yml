@@ -34,3 +34,16 @@ jobs:
         run: python -m compileall -q scripts tests
       - name: Validate package and installer
         run: python -m unittest discover -s tests -v
+      - name: Set up Node.js for standard Skills CLI
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.20.0'
+      - name: Install STAR into a separate consumer project
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/star-consumer"
+          cd "$RUNNER_TEMP/star-consumer"
+          npx --yes skills@1.7.4 add "$GITHUB_WORKSPACE" --skill star-engineering -a claude-code --copy -y
+          test -f .agents/skills/star-engineering/SKILL.md || test -f .claude/skills/star-engineering/SKILL.md
+          test -f .agents/skills/star-engineering/assets/handoff-template.md || test -f .claude/skills/star-engineering/assets/handoff-template.md
+          npx --yes skills@1.7.4 list
