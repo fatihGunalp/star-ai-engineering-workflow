@@ -32,7 +32,9 @@ class PortableSkillContractTests(unittest.TestCase):
         self.assertTrue(keys.get("description", "").startswith('"'))
         description = json.loads(keys["description"])
         self.assertTrue(description.strip())
-        self.assertLessEqual(len(description), 1024)
+        self.assertLessEqual(len(description), 350, "Keep trigger metadata short for Codex/Claude skill listings")
+        self.assertIn("when implementing or reviewing consequential software changes", description)
+        self.assertIn("Not for typos", description)
         self.assertLess(len(text.splitlines()), 500)
         self.assertIn("Direct mode", text)
         self.assertIn("STAR mode", text)
@@ -50,6 +52,18 @@ class PortableSkillContractTests(unittest.TestCase):
                 resolved = (PACKAGE / relative).resolve()
                 self.assertTrue(resolved.is_relative_to(PACKAGE.resolve()))
                 self.assertTrue(resolved.is_file(), relative)
+
+    def test_codex_optional_interface_metadata(self):
+        meta = (PACKAGE / "agents/openai.yaml").read_text(encoding="utf-8")
+        self.assertIn("interface:", meta)
+        self.assertIn("display_name:", meta)
+        self.assertIn("short_description:", meta)
+        self.assertIn("default_prompt:", meta)
+        self.assertIn("$star-engineering", meta)
+        # Avoid adding optional capability/permission requirements to a
+        # provider-neutral skill. Keep Codex automatic invocation enabled.
+        self.assertNotIn("allow_implicit_invocation: false", meta)
+        self.assertNotIn("dependencies:", meta)
 
     def test_self_contained_installable_files(self):
         self.assertTrue((PACKAGE / "references/double-payment.md").is_file())
