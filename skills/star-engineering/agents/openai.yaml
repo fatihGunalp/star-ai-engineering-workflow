@@ -1,0 +1,4 @@
+interface:
+  display_name: "STAR Engineering"
+  short_description: "Keep engineering decisions, risks, and tests visible"
+  default_prompt: "Use $star-engineering to examine this software change, expose consequential decisions and failure cases, then implement and verify what is authorized."
